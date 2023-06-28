@@ -5,10 +5,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #A0A0A0;
+  /*background-color: #A0A0A0;*/
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.airportData {
+  /*width: 70%;*/
+  /*margin: 120px auto;*/
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*justify-content: space-around;*/
+  /*height: 100%;*/
+  /*background-color: #4caf50;*/
 }
