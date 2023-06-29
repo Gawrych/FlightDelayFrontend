@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import React from 'react';
 import SearchFlight from "./components/SearchFlight";
+import {Box} from "@mui/material";
+import PlaneVertical from "./static/images/planeVertical.jpg";
 
 function App() {
 
@@ -17,21 +19,19 @@ function App() {
 
     return (
         <>
-            <SearchFlight onFlightData={handleFlightData} />
+            <Box
+                sx={{
+                    backgroundImage: `url(${PlaneVertical})`,
+                    height: "500vh",
+                    width: "100%",
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                }}
+            >
+                <SearchFlight onFlightData={handleFlightData} />
+            </Box>
         </>
     );
-}
-
-function parseDateToPattern(date) {
-    const parts = date.toString().split("/"); // Split the date string into parts [month, day, year]
-
-    // Create a new Date object using the parts
-    const dateObject = new Date(parts[2], parts[0] - 1, parts[1]);
-
-    // Format the date in "yyyy-MM-dd" pattern
-    return `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}-${dateObject.getDate().toString().padStart(2, "0")}`;
 }
 
 export default App;

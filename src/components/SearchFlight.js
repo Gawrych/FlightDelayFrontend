@@ -5,7 +5,6 @@ import {
     CssBaseline,
     Grid, ThemeProvider,
 } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import match from "autosuggest-highlight/match";
@@ -13,7 +12,6 @@ import parse from "autosuggest-highlight/parse";
 import Button from "@mui/material/Button";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import Airports from "../static/json/Airports.json";
-import plane from "../static/images/plane.jpg";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -46,28 +44,24 @@ const SearchFlight = ({ onFlightData }) => {
         return Airports.find((item) => item.name === selectedValue).ident;
     };
 
+    const check = (newDate, setDateFieldFunction) => {
+        const dateInDate = new Date(newDate);
+        const year = dateInDate.getFullYear();
+        const month = ("0" + (dateInDate.getMonth() + 1)).slice(-2)
+        const day = ("0" + dateInDate.getDate()).slice(-2)
+        const hours = ("0" + dateInDate.getHours()).slice(-2);
+
+        setDateFieldFunction(year + "-" + month + "-" + day + "T" + hours + ":00");
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        const parsedDepartureDate = new Date(departureDate);
-        const formattedDepartureDate = parsedDepartureDate.toLocaleDateString("en-GB", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-        });
-
-        const parsedArrivalDate = new Date(arrivalDate);
-        const formattedArrivalDate = parsedArrivalDate.toLocaleDateString("en-GB", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-        });
 
         const flightData = {
             arrivalAirport: getIcaoCode(arrivalAirport),
             departureAirport: getIcaoCode(departureAirport),
-            arrivalDate: formattedArrivalDate,
-            departureDate: formattedDepartureDate,
+            arrivalDate: arrivalDate,
+            departureDate: departureDate,
         };
 
         onFlightData(flightData);
@@ -94,7 +88,6 @@ const SearchFlight = ({ onFlightData }) => {
                         <Grid item xs={12}>
                             <Box
                                 sx={{
-                                    backgroundImage: `url(${plane})`,
                                     height: "50vh",
                                     width: "100%",
                                     backgroundSize: "cover",
@@ -112,16 +105,14 @@ const SearchFlight = ({ onFlightData }) => {
                                             borderRadius: "4px",
                                         }}
                                     >
-                                        <form className={"airportData"}>
                                             <Grid
                                                 container
                                                 spacing={2}
                                                 justifyContent="center"
-                                                alignItems="center"
-                                            >
+                                                alignItems="center">
+
                                                 <ThemeProvider theme={customTheme}>
                                                 <Grid item xs={12} sm={6} md={3} lg={2}>
-                                                    <label>
                                                         <LocalizationProvider
                                                             dateAdapter={AdapterDayjs}
                                                         >
@@ -131,18 +122,18 @@ const SearchFlight = ({ onFlightData }) => {
                                                                         hours: renderTimeViewClock,
                                                                         minutes: renderTimeViewClock,
                                                                     }}
-                                                                    onAccept={setDepartureDate}
+                                                                    onChange={(date) => check(date, setDepartureDate)}
                                                                     disablePast={true}
                                                                     sx={{ width: "100%" }}
                                                                     label="Departure date"
                                                                 />
                                                             </DemoContainer>
                                                         </LocalizationProvider>
-                                                    </label>
+
                                                 </Grid>
 
                                                 <Grid item xs={12} sm={6} md={2} lg={3}>
-                                                    <label>
+
                                                         <Autocomplete
                                                             id="highlights-demo"
                                                             sx={{ width: "100%" }}
@@ -193,11 +184,10 @@ const SearchFlight = ({ onFlightData }) => {
                                                                 );
                                                             }}
                                                         />
-                                                    </label>
                                                 </Grid>
 
                                                 <Grid item xs={12} sm={6} md={3} lg={2}>
-                                                    <label>
+
                                                         <LocalizationProvider
                                                             dateAdapter={AdapterDayjs}
                                                         >
@@ -207,18 +197,18 @@ const SearchFlight = ({ onFlightData }) => {
                                                                         hours: renderTimeViewClock,
                                                                         minutes: renderTimeViewClock,
                                                                     }}
-                                                                    onAccept={setArrivalDate}
+                                                                    onChange={(date) => check(date, setArrivalDate)}
                                                                     disablePast={true}
                                                                     sx={{ width: "100%" }}
                                                                     label="Arrival date"
                                                                 />
                                                             </DemoContainer>
                                                         </LocalizationProvider>
-                                                    </label>
+
                                                 </Grid>
 
                                                 <Grid item xs={12} sm={6} md={2} lg={3}>
-                                                    <label>
+
                                                         <Autocomplete
                                                             id="highlights-demo"
                                                             sx={{ width: "100%" }}
@@ -268,7 +258,7 @@ const SearchFlight = ({ onFlightData }) => {
                                                                 );
                                                             }}
                                                         />
-                                                    </label>
+
                                                 </Grid>
                                                 <Grid item xs={12} md={12} lg={2} sx={{
                                                     display: "flex",
@@ -286,7 +276,6 @@ const SearchFlight = ({ onFlightData }) => {
                                                 </Grid>
                                                 </ThemeProvider>
                                             </Grid>
-                                        </form>
                                     </Box>
                                 </Container>
                             </Box>
