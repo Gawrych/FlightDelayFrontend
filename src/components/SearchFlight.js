@@ -5,9 +5,6 @@ import {
     CssBaseline,
     Grid, ThemeProvider,
 } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -17,8 +14,13 @@ import Button from "@mui/material/Button";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import Airports from "../static/json/Airports.json";
 import plane from "../static/images/plane.jpg";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
 
-const SearchFlight = () => {
+const SearchFlight = ({ onFlightData }) => {
     const [items, setItems] = useState([]);
     const [arrivalAirport, setArrivalAirport] = useState("");
     const [departureAirport, setDepartureAirport] = useState("");
@@ -47,8 +49,28 @@ const SearchFlight = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        console.log("Arrival airport ICAO:", getIcaoCode(arrivalAirport));
-        console.log("Departure airport ICAO:", getIcaoCode(departureAirport));
+        const parsedDepartureDate = new Date(departureDate);
+        const formattedDepartureDate = parsedDepartureDate.toLocaleDateString("en-GB", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        });
+
+        const parsedArrivalDate = new Date(arrivalDate);
+        const formattedArrivalDate = parsedArrivalDate.toLocaleDateString("en-GB", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        });
+
+        const flightData = {
+            arrivalAirport: getIcaoCode(arrivalAirport),
+            departureAirport: getIcaoCode(departureAirport),
+            arrivalDate: formattedArrivalDate,
+            departureDate: formattedDepartureDate,
+        };
+
+        onFlightData(flightData);
     };
 
     const customTheme = createTheme({
@@ -104,7 +126,13 @@ const SearchFlight = () => {
                                                             dateAdapter={AdapterDayjs}
                                                         >
                                                             <DemoContainer components={["DatePicker"]}>
-                                                                <DatePicker
+                                                                <DateTimePicker
+                                                                    viewRenderers={{
+                                                                        hours: renderTimeViewClock,
+                                                                        minutes: renderTimeViewClock,
+                                                                    }}
+                                                                    onAccept={setDepartureDate}
+                                                                    disablePast={true}
                                                                     sx={{ width: "100%" }}
                                                                     label="Departure date"
                                                                 />
@@ -174,7 +202,13 @@ const SearchFlight = () => {
                                                             dateAdapter={AdapterDayjs}
                                                         >
                                                             <DemoContainer components={["DatePicker"]}>
-                                                                <DatePicker
+                                                                <DateTimePicker
+                                                                    viewRenderers={{
+                                                                        hours: renderTimeViewClock,
+                                                                        minutes: renderTimeViewClock,
+                                                                    }}
+                                                                    onAccept={setArrivalDate}
+                                                                    disablePast={true}
                                                                     sx={{ width: "100%" }}
                                                                     label="Arrival date"
                                                                 />
@@ -226,9 +260,8 @@ const SearchFlight = () => {
                                                                                             ? 700
                                                                                             : 400,
                                                                                     }}
-                                                                                >
-                                          {part.text}
-                                        </span>
+                                                                                > {part.text}
+                                                                                </span>
                                                                             ))}
                                                                         </div>
                                                                     </li>
