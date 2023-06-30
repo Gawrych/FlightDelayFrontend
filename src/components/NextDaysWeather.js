@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
     Box,
     Container, createTheme,
@@ -24,14 +24,35 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
-
+import AirIcon from '@mui/icons-material/Air';
+import WaterDropIcon from '@mui/icons-material/WaterDrop';
+import CloudIcon from '@mui/icons-material/Cloud';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 function NextDaysWeather({ nextDaysWeatherRecords }) {
+
+    const [details, setDetails] = useState("");
+    const [currentPeriodId, setCurrentPeriodId] = useState("");
+    
+    const defaultDetailText = "Click on factor to see details";
+
+    const handleMouseOver = (factorType, id) => {
+        let text = "Hover on factor to see details";
+        if (factorType === "VISIBILITY") {
+          text = "Hello world visibility";
+        } else if (factorType === "CROSSWIND") {
+            text = "Hello world CROSSWIND";
+        }
+
+        setDetails(text);
+        setCurrentPeriodId(id);
+    };
 
     if (!nextDaysWeatherRecords) {
         return;
     }
-    
+
     const setPeriodFactorInfluence = (factorsObject) => {
         let periodInfluence = "LOW";
 
@@ -88,61 +109,31 @@ function NextDaysWeather({ nextDaysWeatherRecords }) {
         );
     }
 
-    const createTableRow = (factor) => {
+    const createTableRow = (factor, recordId, icon) => {
+        const primaryText = <span style={{color: setColor(factor.influence_on_delay) }}> {factor.title} - {factor.influence_on_delay.toLowerCase()} influence</span>;
+        const secondaryText = factor.value + " " + factor.unit_name;
+
         return (
-            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                    
-                    <TableCell component="th" scope="row">
-                        {factor.title}
-                    </TableCell>
-
-                    <TableCell align="right" component="th" scope="row">
-                        {factor.value}
-                    </TableCell>
-
-                    <TableCell align="right" component="th" scope="row">
-                        {factor.unit_name}
-                    </TableCell>
-
-                    <TableCell align="right" component="th" scope="row" sx={{ color: setColor(factor.influence_on_delay)}}>
-                        {factor.influence_on_delay}
-                    </TableCell>
-            </TableRow>);
+            <>   
+                <Grid item xs={12} sm={12} md={3} lg={6}>
+                    <List>
+                        <ListItemButton onClick={() => handleMouseOver(factor.id, recordId)}>
+                            <ListItem>
+                                    <ListItemIcon>
+                                        {icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={primaryText} secondary={secondaryText} />
+                                </ListItem>
+                        </ListItemButton>
+                    </List>
+                </Grid>
+            </>
+        );
     }
 
     return (
         <div>
             <Container maxWidth="xl">
-
-                    <Grid container
-                                        spacing={2}
-                                        justifyContent="center"
-                                        alignItems="center">
-                            
-                            <Grid item xs={12} sm={12} md={3} lg={6}>
-                                <List>
-                                    <ListItem>
-                                        <ListItemIcon>
-                                            <InboxIcon />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Visibility - LOW" secondary="24140 meters" />
-                                    </ListItem>
-                                </List>
-                            </Grid>
-
-                            <Grid item xs={12} sm={12} md={3} lg={6}>
-                                <List>
-                                    <ListItem>
-                                        <ListItemIcon>
-                                            <InboxIcon />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Visibility - LOW" secondary="24140 meters" />
-                                    </ListItem>
-                                </List>
-                            </Grid>
-                            
-
-                        </Grid>
 
                         <Grid item xs={12} sm={12} md={3} lg={6}>
 
@@ -151,7 +142,7 @@ function NextDaysWeather({ nextDaysWeatherRecords }) {
                             </Typography>
 
                         </Grid>
-                        
+
             <Grid
                 container
                 spacing={2}
@@ -163,40 +154,43 @@ function NextDaysWeather({ nextDaysWeatherRecords }) {
                 <Grid item xs={7} sm={9} md={6} lg={6}>
 
                     <Accordion>
-                    <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1bh-content"
-                    id="panel1bh-header"
-                    >
+                        <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1bh-content"
+                        id="panel1bh-header"
+                        >
 
-                        {createSummaryRow(record)}
+                            {createSummaryRow(record)}
 
-                    </AccordionSummary>
+                        </AccordionSummary>
 
-                    <AccordionDetails>
+                        <AccordionDetails>
 
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Factor</TableCell>
-                                    <TableCell align="right">Value</TableCell>
-                                    <TableCell align="right">Unit</TableCell>
-                                    <TableCell align="right">Influence on delay</TableCell>
-                                </TableRow>
-                            </TableHead>
+                            <Grid container
+                                spacing={2}>
 
-                            <TableBody>
-                            
-                                {createTableRow(record.factors.VISIBILITY)}
-                                {createTableRow(record.factors.CROSSWIND)}
-                                {createTableRow(record.factors.TAILWIND)}
-                                {createTableRow(record.factors.CLOUDBASE)}
-                                {createTableRow(record.factors.RAIN)}
+                                {createTableRow(record.factors.VISIBILITY, record.id, <VisibilityIcon sx={{ color: "#AAAAAA" }}/>)}
+                                {createTableRow(record.factors.CROSSWIND, record.id, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
+                                {createTableRow(record.factors.TAILWIND, record.id, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
+                                {createTableRow(record.factors.CLOUDBASE, record.id, <CloudIcon sx={{ color: "#00bbf9" }}/>)}
+                                {createTableRow(record.factors.RAIN, record.id, <WaterDropIcon sx={{ color: "#00bbf9" }}/>)}
 
-                            </TableBody>
-                        </Table>
+                                <Grid item xs={12} sm={12} md={3} lg={6}>
+                                    <List>
+                                    <ListItemButton>
+                                        <ListItem> 
+                                            <ListItemIcon>
+                                                <InfoOutlinedIcon />
+                                            </ListItemIcon>
+                                            <ListItemText key={record.id} primary="Details" secondary={currentPeriodId === record.id ? details : defaultDetailText} />
+                                        </ListItem>
+                                        </ListItemButton>
+                                    </List>
+                            </Grid>
 
-                    </AccordionDetails>
+                            </Grid>
+
+                        </AccordionDetails>
                     </Accordion>
 
                     </Grid>
