@@ -6,30 +6,7 @@ import {Box, Container, Grid, CssBaseline} from "@mui/material";
 import PlaneVertical from "./static/images/planeVertical.jpg";
 import axios from "axios"
 
-const NEXT_WEATHER_URL = "http://localhost:8080/api/v1/weather/periods?days=7";
-
 function App() {
-    const [nextDaysWeatherRecords, setNextDaysWeatherRecords] = useState(null);
-
-
-    useEffect(() => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept-Language': 'en-EN' },
-            body: JSON.stringify({ airportIdent: 'EPWA', phase: 'DEPARTURE' })
-        };
-
-        const fetchNextDaysWeather = async () => {
-
-            const data = await fetch(NEXT_WEATHER_URL, requestOptions)
-                .then(response => response.json());
-
-            setNextDaysWeatherRecords(data);
-            console.log(nextDaysWeatherRecords);
-        };
-
-        fetchNextDaysWeather();
-    }, []);
 
     const handleFlightData = (data) => {
         console.log("Arrival airport ICAO:", data.arrivalAirport);
@@ -46,7 +23,7 @@ function App() {
             <div>
                 <Box
                     sx={{
-                        // backgroundImage: `url(${PlaneVertical})`,
+                        backgroundImage: `url(${PlaneVertical})`,
                         height: "300vh",
                         width: "100%",
                         backgroundSize: "cover",
@@ -63,13 +40,13 @@ function App() {
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                backgroundColor: "rgba(230, 230, 230, 0.8)",
+                                backgroundColor: "rgba(255, 255, 255, 0.8)",
                                 padding: "1rem",
                                 borderRadius: "4px",
                                 boxShadow: "1",
                             }}>
                         
-                            <NextDaysWeather nextDaysWeatherRecords={nextDaysWeatherRecords} />
+                            <NextDaysWeather />
                         
                         </Box>
                     </Container>

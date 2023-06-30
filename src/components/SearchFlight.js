@@ -3,7 +3,7 @@ import {
     Box,
     Container, createTheme,
     CssBaseline,
-    Grid, ThemeProvider,
+    Grid, ThemeProvider, Typography,
 } from "@mui/material";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
@@ -24,6 +24,8 @@ const SearchFlight = ({ onFlightData }) => {
     const [departureAirport, setDepartureAirport] = useState("");
     const [departureDate, setDepartureDate] = useState("");
     const [arrivalDate, setArrivalDate] = useState("");
+    const [warning, setWarning] = useState(false);
+    const [warningText, setWarningText] = useState("");
 
     useEffect(() => {
         const fetchAirports = async () => {
@@ -56,6 +58,26 @@ const SearchFlight = ({ onFlightData }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        if (arrivalAirport === "" || departureAirport === "") {
+            setWarning(true);
+            setWarningText("You have to select airports and dates");
+            return;
+        }
+
+        if (arrivalAirport === departureAirport) {
+            setWarning(true);
+            setWarningText("Airports must be differents");
+            return;
+        }
+
+        if (arrivalDate === departureDate) {
+            setWarning(true);
+            setWarningText("Dates must be differents");
+            return;
+        }
+
+        setWarning(false);
 
         const flightData = {
             arrivalAirport: getIcaoCode(arrivalAirport),
@@ -274,6 +296,8 @@ const SearchFlight = ({ onFlightData }) => {
                                         </Grid>
                                         </ThemeProvider>
                                     </Grid>
+
+                                    {warning && <Typography variant="body1"><span style={{ color: "red" }}>{warningText}</span></Typography>}
                             </Box>
                         </Container>
                     </Box>
