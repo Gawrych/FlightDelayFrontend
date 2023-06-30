@@ -32,25 +32,17 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 function NextDaysWeather({ nextDaysWeatherRecords }) {
 
-    const [details, setDetails] = useState("");
-    const [currentPeriodId, setCurrentPeriodId] = useState("");
-    
-    const defaultDetailText = "Click on factor to see details";
-
-    const handleMouseOver = (factorType, id) => {
-        let text = "Hover on factor to see details";
-        if (factorType === "VISIBILITY") {
-          text = "Hello world visibility";
-        } else if (factorType === "CROSSWIND") {
-            text = "Hello world CROSSWIND";
-        }
-
-        setDetails(text);
-        setCurrentPeriodId(id);
-    };
-
     if (!nextDaysWeatherRecords) {
         return;
+    }
+
+    function getMonthName(monthNumber) {
+        const date = new Date();
+        date.setMonth(monthNumber - 1);
+      
+        return date.toLocaleString('en-US', {
+          month: 'long',
+        });
     }
 
     const setPeriodFactorInfluence = (factorsObject) => {
@@ -91,13 +83,22 @@ function NextDaysWeather({ nextDaysWeatherRecords }) {
 
         return color;
     }
+    
+    const parseDate = (dateToParse) => {
+        const date = new Date(dateToParse);
+
+        const monthName = getMonthName(date.getMonth());
+        const hourWithoutZeroAtStart = dateToParse.slice(-5).replace(/^0+/, '');
+        return monthName + " " + date.getDate() + ", " + hourWithoutZeroAtStart;
+    }
 
     const createSummaryRow = (record) => {
         const finalInfluence = setPeriodFactorInfluence(record.factors);
+
         return (
             <>
                 <Typography sx={{ width: '50%', flexShrink: 0 }}>
-                    {record.from_time.replace("T", " ")} - {record.to_time.replace("T", " ")}
+                    {parseDate(record.from_time)} - {parseDate(record.to_time)}
                 </Typography>
 
                 <Typography align="center" sx={{ width: '50%', color: setColor(finalInfluence)}}>
@@ -109,7 +110,7 @@ function NextDaysWeather({ nextDaysWeatherRecords }) {
         );
     }
 
-    const createTableRow = (factor, recordId, icon) => {
+    const createTableRow = (factor, icon) => {
         const primaryText = <span style={{color: setColor(factor.influence_on_delay) }}> {factor.title} - {factor.influence_on_delay.toLowerCase()} influence</span>;
         const secondaryText = factor.value + " " + factor.unit_name;
 
@@ -117,14 +118,12 @@ function NextDaysWeather({ nextDaysWeatherRecords }) {
             <>   
                 <Grid item xs={12} sm={12} md={3} lg={6}>
                     <List>
-                        <ListItemButton onClick={() => handleMouseOver(factor.id, recordId)}>
-                            <ListItem>
-                                    <ListItemIcon>
-                                        {icon}
-                                    </ListItemIcon>
-                                    <ListItemText primary={primaryText} secondary={secondaryText} />
-                                </ListItem>
-                        </ListItemButton>
+                        <ListItem>
+                                <ListItemIcon>
+                                    {icon}
+                                </ListItemIcon>
+                                <ListItemText primary={primaryText} secondary={secondaryText} />
+                        </ListItem>
                     </List>
                 </Grid>
             </>
@@ -169,24 +168,11 @@ function NextDaysWeather({ nextDaysWeatherRecords }) {
                             <Grid container
                                 spacing={2}>
 
-                                {createTableRow(record.factors.VISIBILITY, record.id, <VisibilityIcon sx={{ color: "#AAAAAA" }}/>)}
-                                {createTableRow(record.factors.CROSSWIND, record.id, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
-                                {createTableRow(record.factors.TAILWIND, record.id, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
-                                {createTableRow(record.factors.CLOUDBASE, record.id, <CloudIcon sx={{ color: "#00bbf9" }}/>)}
-                                {createTableRow(record.factors.RAIN, record.id, <WaterDropIcon sx={{ color: "#00bbf9" }}/>)}
-
-                                <Grid item xs={12} sm={12} md={3} lg={6}>
-                                    <List>
-                                    <ListItemButton>
-                                        <ListItem> 
-                                            <ListItemIcon>
-                                                <InfoOutlinedIcon />
-                                            </ListItemIcon>
-                                            <ListItemText key={record.id} primary="Details" secondary={currentPeriodId === record.id ? details : defaultDetailText} />
-                                        </ListItem>
-                                        </ListItemButton>
-                                    </List>
-                            </Grid>
+                                {createTableRow(record.factors.VISIBILITY, <VisibilityIcon sx={{ color: "#AAAAAA" }}/>)}
+                                {createTableRow(record.factors.CROSSWIND, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
+                                {createTableRow(record.factors.TAILWIND, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
+                                {createTableRow(record.factors.CLOUDBASE, <CloudIcon sx={{ color: "#00bbf9" }}/>)}
+                                {createTableRow(record.factors.RAIN, <WaterDropIcon sx={{ color: "#00bbf9" }}/>)}
 
                             </Grid>
 
