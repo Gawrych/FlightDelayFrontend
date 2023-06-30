@@ -15,7 +15,7 @@ function App() {
     useEffect(() => {
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept-Language': 'pl-PL' },
+            headers: { 'Content-Type': 'application/json', 'Accept-Language': 'en-EN' },
             body: JSON.stringify({ airportIdent: 'EPWA', phase: 'DEPARTURE' })
         };
 
@@ -63,7 +63,7 @@ function App() {
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                backgroundColor: "rgba(255, 255, 255, 0.8)",
+                                backgroundColor: "rgba(230, 230, 230, 0.8)",
                                 padding: "1rem",
                                 borderRadius: "4px",
                                 boxShadow: "1",
