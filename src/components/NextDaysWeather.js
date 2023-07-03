@@ -4,6 +4,7 @@ import {
     Container,
     Grid,
 } from "@mui/material";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -25,6 +26,7 @@ import Airports from "../static/json/Airports.json";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import Button from "@mui/material/Button";
 import LinearProgress from '@mui/material/LinearProgress';
+import Chip from '@mui/material/Chip';
 
 const NEXT_WEATHER_URL = "http://localhost:8080/api/v1/weather/periods?days=5";
 
@@ -34,7 +36,6 @@ function NextDaysWeather({}) {
     const [nextDayWeatherAirportIcao, setNextDayWeatherAirportIcao] = useState("EPWA");
     const [nextDayWeatherAirport, setNextDayWeatherAirport] = useState("");
     const [loading, setLoading] = useState(false);
-
 
     const fetchNextDaysWeather = async () => {
 
@@ -139,6 +140,22 @@ function NextDaysWeather({}) {
 
         return color;
     }
+
+    const setPreSetColor = (influence) => {
+        let color = "success";
+
+        if (influence.toLowerCase() === "low") {
+            color = "success"
+
+        } else if (influence.toLowerCase() === "medium") {
+            color = "warning"
+
+        } else if (influence.toLowerCase() === "high") {
+            color = "error"
+        }
+
+        return color;
+    }
     
     const parseDate = (dateToParse) => {
         const date = new Date(dateToParse);
@@ -150,6 +167,15 @@ function NextDaysWeather({}) {
         }
         return monthName + " " + date.getDate() + ", " + hourWithoutZeroAtStart;
     }
+
+    const theme = createTheme({
+        palette: {
+          lowInfluence: {
+            main: '#fff',
+            contrastText: '#000',
+          },
+        },
+      });
 
     const createSummaryRow = (record) => {
         const finalInfluence = setPeriodFactorInfluence(record.factors);
@@ -166,7 +192,7 @@ function NextDaysWeather({}) {
 
                 <Typography align="center" sx={{ width: '50%', color: setColor(finalInfluence)}}>
 
-                    {finalInfluence}
+                <Chip label={finalInfluence} color={setPreSetColor(finalInfluence)} />
 
                 </Typography>
             </AccordionSummary>
@@ -181,9 +207,7 @@ function NextDaysWeather({}) {
             <Grid item xs={12} sm={12} md={6} lg={6}>
                 <List>
                     <ListItem key={index}>
-                            <ListItemIcon>
-                                {icon}
-                            </ListItemIcon>
+                            <ListItemIcon> {icon} </ListItemIcon>
                             <ListItemText primary={primaryText} secondary={secondaryText} />
                     </ListItem>
                 </List>
@@ -194,11 +218,11 @@ function NextDaysWeather({}) {
     return (
         <>
         <div>
-            <Container maxWidth="xl">
+            <Container maxWidth="lg">
 
-                    <Box sx={{ width: '100%' }}>
-                        {loading && <LinearProgress />}
-                    </Box>
+                <Box sx={{ width: '100%' }}>
+                    {loading && <LinearProgress />}
+                </Box>
 
                 <Box>
                     <Grid container justifyContent="center">
@@ -250,40 +274,43 @@ function NextDaysWeather({}) {
                         </Grid>
                     </Grid>
                 </Box>
-                <Grid
-                    container
-                    spacing={2}
-                    justifyContent="center"
-                    alignItems="top">
+                <Box>
+                    <ThemeProvider theme={theme}>
+                        <Grid
+                            container
+                            spacing={2}
+                            justifyContent="center"
+                            alignItems="top">
 
-                    {nextDaysWeatherRecords.map((record, index) => (
+                            {nextDaysWeatherRecords.map((record, index) => (
 
-                    <Grid item xs={12} sm={12} md={6} lg={6} >
+                                <Grid item xs={12} sm={12} md={6} lg={6} >
 
-                        <Accordion>
-                            
-                            {createSummaryRow(record)}
+                                    <Accordion>
+                                        
+                                        {createSummaryRow(record)}
 
-                            <AccordionDetails>
+                                        <AccordionDetails>
 
-                                <Grid container
-                                    spacing={2}>
+                                            <Grid container
+                                                spacing={2}>
 
-                                    {createTableRow(record.factors.VISIBILITY, index, <VisibilityIcon sx={{ color: "#AAAAAA" }}/>)}
-                                    {createTableRow(record.factors.CROSSWIND, index, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
-                                    {createTableRow(record.factors.TAILWIND, index, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
-                                    {createTableRow(record.factors.CLOUDBASE, index, <CloudIcon sx={{ color: "#00bbf9" }}/>)}
-                                    {createTableRow(record.factors.RAIN, index, <WaterDropIcon sx={{ color: "#00bbf9" }}/>)}
+                                                {createTableRow(record.factors.VISIBILITY, index, <VisibilityIcon sx={{ color: "#AAAAAA" }}/>)}
+                                                {createTableRow(record.factors.CROSSWIND, index, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
+                                                {createTableRow(record.factors.TAILWIND, index, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
+                                                {createTableRow(record.factors.CLOUDBASE, index, <CloudIcon sx={{ color: "#00bbf9" }}/>)}
+                                                {createTableRow(record.factors.RAIN, index, <WaterDropIcon sx={{ color: "#00bbf9" }}/>)}
 
+                                            </Grid>
+
+                                        </AccordionDetails>
+                                    </Accordion>
                                 </Grid>
-
-                            </AccordionDetails>
-                        </Accordion>
-                    </Grid>
-                    
-                ))}
-            </Grid>
-        </Container>
+                            ))}
+                        </Grid>
+                    </ThemeProvider>
+                </Box>
+            </Container>
     </div>
     </>     
     );

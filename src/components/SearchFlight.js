@@ -17,8 +17,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
+import LinearProgress from '@mui/material/LinearProgress';
 
-const SearchFlight = ({ onFlightData }) => {
+const SearchFlight = ({ onFlightData, loadingStatus}) => {
     const [items, setItems] = useState([]);
     const [arrivalAirport, setArrivalAirport] = useState("");
     const [departureAirport, setDepartureAirport] = useState("");
@@ -26,6 +27,9 @@ const SearchFlight = ({ onFlightData }) => {
     const [arrivalDate, setArrivalDate] = useState("");
     const [warning, setWarning] = useState(false);
     const [warningText, setWarningText] = useState("");
+    const [defaultDate, setDefaultDate] = useState(new Date());
+
+
 
     useEffect(() => {
         const fetchAirports = async () => {
@@ -298,6 +302,9 @@ const SearchFlight = ({ onFlightData }) => {
                                     </Grid>
 
                                     {warning && <Typography variant="body1"><span style={{ color: "red" }}>{warningText}</span></Typography>}
+                            </Box>
+                            <Box sx={{ width: '100%' }}>
+                                {loadingStatus && <LinearProgress />}
                             </Box>
                         </Container>
                     </Box>

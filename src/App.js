@@ -2,18 +2,22 @@ import { useState, useEffect } from "react";
 import React from 'react';
 import SearchFlight from "./components/SearchFlight";
 import NextDaysWeather from "./components/NextDaysWeather";
+import DelayCalculation from "./components/DelayCalculation";
 import {Box, Container, Grid, CssBaseline} from "@mui/material";
 import PlaneVertical from "./static/images/planeVertical.jpg";
 import axios from "axios"
 
 function App() {
+    const [flightData, setFlightData] = useState(null);
+    const [loadingStatus, setLoadingStatus] = useState(false);
 
     const handleFlightData = (data) => {
-        console.log("Arrival airport ICAO:", data.arrivalAirport);
-        console.log("Departure airport ICAO:", data.departureAirport);
+        setLoadingStatus(true);
+        setFlightData(data);
+    }
 
-        console.log("Arrival date:", data.arrivalDate);
-        console.log("Departure date:", data.departureDate);
+    const fetchComplete = () => {
+        setLoadingStatus(false);
     }
 
     return (
@@ -30,26 +34,26 @@ function App() {
                         backgroundRepeat: "no-repeat",
                     }}>
                 
-                    <SearchFlight onFlightData={handleFlightData} />
+                    <SearchFlight onFlightData={handleFlightData} loadingStatus={loadingStatus} />
 
-                    <Container maxWidth="xl">
-                        <Box
-                            sx={{
-                                width: "100%",
-                                backgroundSize: "cover",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                backgroundColor: "rgba(255, 255, 255, 0.8)",
-                                padding: "1rem",
-                                borderRadius: "4px",
-                                boxShadow: "1",
-                            }}>
-                        
-                            <NextDaysWeather />
-                        
-                        </Box>
-                    </Container>
+                    <DelayCalculation flightData={flightData} fetchComplete={fetchComplete} />
+
+                    <Box
+                        sx={{
+                            width: "100%",
+                            backgroundSize: "cover",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: "rgba(255, 255, 255, 0.8)",
+                            padding: "2rem",
+                            borderRadius: "4px",
+                            boxShadow: "1",
+                        }}>
+                    
+                        <NextDaysWeather />
+                    
+                    </Box>
                 </Box>
             </div>
         </main>
