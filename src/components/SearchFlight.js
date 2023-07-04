@@ -18,6 +18,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
 import LinearProgress from '@mui/material/LinearProgress';
+import Plane from "../static/images/planeVertical.jpg";
+
 
 const SearchFlight = ({ onFlightData, loadingStatus}) => {
     const [items, setItems] = useState([]);
@@ -27,9 +29,6 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
     const [arrivalDate, setArrivalDate] = useState("");
     const [warning, setWarning] = useState(false);
     const [warningText, setWarningText] = useState("");
-    const [defaultDate, setDefaultDate] = useState(new Date());
-
-
 
     useEffect(() => {
         const fetchAirports = async () => {
@@ -111,6 +110,7 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
                 <div>
                     <Box
                         sx={{
+                            backgroundImage: `url(${Plane})`,
                             height: "50vh",
                             width: "100%",
                             backgroundSize: "cover",

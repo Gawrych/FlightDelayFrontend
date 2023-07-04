@@ -108,11 +108,6 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
         }
     }, [flightData]);
 
-    useEffect(() => {
-        console.log("arrivalWeatherData");
-        console.log(arrivalWeatherData);
-    }, [arrivalWeatherData]);
-
     if (!arrivalWeatherData || !arrivalStatisticsData || !departureWeatherData || !departureStatisticsData) {
         return;
     }
@@ -139,7 +134,7 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
 
                                 <Grid item container xs={12} sm={12} md={6} lg={6}>
                                     <Grid item xs={12} sm={12} md={12} lg={12} >
-                                        <Typography variant="h6">Departure</Typography>
+                                        <Typography variant="h6">Departure airport</Typography>
                                     </Grid>
                                     
                                     <Grid item container xs={12} sm={12} md={12} lg={12} sx={{ alignItems: "center" }}>
@@ -164,7 +159,7 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
 
                                 <Grid item container xs={12} sm={12} md={6} lg={6}>
                                     <Grid item xs={12} sm={12} md={12} lg={12} >
-                                        <Typography variant="h6" >Arrival</Typography>
+                                        <Typography variant="h6" >Arrival airport</Typography>
                                     </Grid>
 
                                     <Grid item container xs={12} sm={12} md={12} lg={12} sx={{ alignItems: "center" }}>

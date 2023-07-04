@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
     Box,
     Container,
@@ -27,18 +27,19 @@ import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import Button from "@mui/material/Button";
 import LinearProgress from '@mui/material/LinearProgress';
 import Chip from '@mui/material/Chip';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
 
 const NEXT_WEATHER_URL = "http://localhost:8080/api/v1/weather/periods?days=5";
 
-function NextDaysWeather({}) {
+function NextDaysWeather() {
     const [items, setItems] = useState([]);
     const [nextDaysWeatherRecords, setNextDaysWeatherRecords] = useState(null);
     const [nextDayWeatherAirportIcao, setNextDayWeatherAirportIcao] = useState("EPWA");
     const [nextDayWeatherAirport, setNextDayWeatherAirport] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const fetchNextDaysWeather = async () => {
-
+    const fetchNextDaysWeather = useCallback(async () => {
         let requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept-Language': 'en-EN' },
@@ -50,8 +51,7 @@ function NextDaysWeather({}) {
 
         setNextDaysWeatherRecords(data);
         setLoading(false);
-        console.log(nextDaysWeatherRecords);
-    };
+      }, [nextDayWeatherAirportIcao]);
 
     useEffect(() => {
         const fetchAirports = async () => {
@@ -65,7 +65,7 @@ function NextDaysWeather({}) {
 
     useEffect(() => {
         fetchNextDaysWeather();
-      }, [nextDayWeatherAirportIcao]);
+    }, [nextDayWeatherAirportIcao]);
 
     if (!nextDaysWeatherRecords) {
         return;
@@ -82,7 +82,7 @@ function NextDaysWeather({}) {
 
         const airportIcao = getIcaoCode(nextDayWeatherAirport);
 
-        if (airportIcao != nextDayWeatherAirportIcao) {
+        if (airportIcao !== nextDayWeatherAirportIcao) {
             setLoading(true);
         }
 
@@ -112,8 +112,10 @@ function NextDaysWeather({}) {
 
             } else if (factor.influence_on_delay === "HIGH") {
                 periodInfluence = "HIGH";
-                return;
+                return 0;
             }
+
+            return 0;
         });
 
         return capitalizeFirstLowercaseRest(periodInfluence);
@@ -123,19 +125,35 @@ function NextDaysWeather({}) {
         return (
           str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
         );
-      };
+    };
 
     const setColor = (influence) => {
-        let color = "black";
+        let color = "#000";
 
         if (influence.toLowerCase() === "low") {
-            color = "green"
+            color = "#e7fce9"
 
         } else if (influence.toLowerCase() === "medium") {
-            color = "orange"
+            color = "#fff0e1"
 
         } else if (influence.toLowerCase() === "high") {
-            color = "red"
+            color = "#F5C7C2"
+        }
+
+        return color;
+    }
+
+    const setDarkColor = (influence) => {
+        let color = "#000";
+
+        if (influence.toLowerCase() === "low") {
+            color = "#28AF5F"
+
+        } else if (influence.toLowerCase() === "medium") {
+            color = "#e69241"
+
+        } else if (influence.toLowerCase() === "high") {
+            color = "#ee786b"
         }
 
         return color;
@@ -156,6 +174,16 @@ function NextDaysWeather({}) {
 
         return color;
     }
+
+    const theme = createTheme({
+        palette: {
+          neutral: {
+            success: "#28AF5F",
+            warning: '#e69241',
+            error: '#ee786b',
+          }
+        }
+    });
     
     const parseDate = (dateToParse) => {
         const date = new Date(dateToParse);
@@ -168,46 +196,64 @@ function NextDaysWeather({}) {
         return monthName + " " + date.getDate() + ", " + hourWithoutZeroAtStart;
     }
 
-    const theme = createTheme({
-        palette: {
-          lowInfluence: {
-            main: '#fff',
-            contrastText: '#000',
-          },
-        },
-      });
-
     const createSummaryRow = (record) => {
         const finalInfluence = setPeriodFactorInfluence(record.factors);
+        const color = setColor(finalInfluence);
 
         return (
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
-                >
-                <Typography sx={{ width: '50%', flexShrink: 0 }}>
-                    {parseDate(record.from_time)} - {parseDate(record.to_time)}
+                sx={{
+                    backgroundColor: color,
+                    textAlign: "center",
+                }}
+            >
+                <Typography sx={{ width: '23%', flexShrink: 0, alignSelf: "center" }}>
+                    {parseDate(record.from_time)}
                 </Typography>
 
-                <Typography align="center" sx={{ width: '50%', color: setColor(finalInfluence)}}>
+                <Typography sx={{ width: '4%', flexShrink: 0, alignSelf: "center" }}>
+                    -
+                </Typography>
 
-                <Chip label={finalInfluence} color={setPreSetColor(finalInfluence)} />
+                <Typography sx={{ width: '23%', flexShrink: 0, alignSelf: "center" }}>
+                    {parseDate(record.to_time)}
+                </Typography>
 
+                <Typography sx={{ width: '50%', color: "#000" }}>
+                    <Chip
+                        label={finalInfluence}
+                        sx={{
+                            color: "#fff",
+                            backgroundColor: setDarkColor(finalInfluence),
+                        }}
+                    />
                 </Typography>
             </AccordionSummary>
         );
     }
 
     const createTableRow = (factor, index, icon) => {
-        const primaryText = <span style={{color: setColor(factor.influence_on_delay) }}> {factor.title} - {factor.influence_on_delay.toLowerCase()} influence</span>;
+        const primaryText = <span> {factor.title}</span>;
         const secondaryText = factor.value + " " + factor.unit_name;
+        const color = setColor(factor.influence_on_delay);
+        const darkColor = setDarkColor(factor.influence_on_delay);
 
         return (
             <Grid item xs={12} sm={12} md={6} lg={6}>
-                <List>
+                <List sx={{
+                        backgroundColor: color,
+                        padding: "0.3rem",
+                        borderRadius: "15px",}}>
                     <ListItem key={index}>
-                            <ListItemIcon> {icon} </ListItemIcon>
+                             <ListItemAvatar>
+                                <Avatar sx={{
+                                    backgroundColor: darkColor,}}>
+                                    {icon}
+                                </Avatar>
+                            </ListItemAvatar>
                             <ListItemText primary={primaryText} secondary={secondaryText} />
                     </ListItem>
                 </List>
@@ -286,20 +332,26 @@ function NextDaysWeather({}) {
 
                                 <Grid item xs={12} sm={12} md={6} lg={6} >
 
-                                    <Accordion>
+                                    <Accordion sx={{
+                                            
+                                        }}>
                                         
                                         {createSummaryRow(record)}
 
-                                        <AccordionDetails>
+                                        <AccordionDetails sx={{
+                                            backgroundColor: "#fff",
+                                            marginTop: "20px"
+                                        }}>
 
                                             <Grid container
-                                                spacing={2}>
+                                                spacing={4}
+                                                >
 
-                                                {createTableRow(record.factors.VISIBILITY, index, <VisibilityIcon sx={{ color: "#AAAAAA" }}/>)}
-                                                {createTableRow(record.factors.CROSSWIND, index, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
-                                                {createTableRow(record.factors.TAILWIND, index, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
-                                                {createTableRow(record.factors.CLOUDBASE, index, <CloudIcon sx={{ color: "#00bbf9" }}/>)}
-                                                {createTableRow(record.factors.RAIN, index, <WaterDropIcon sx={{ color: "#00bbf9" }}/>)}
+                                                {createTableRow(record.factors.VISIBILITY, index, <VisibilityIcon sx={{ color: "#fff" }}/>)}
+                                                {createTableRow(record.factors.CROSSWIND, index, <AirIcon sx={{ color: "#fff" }}/>)}
+                                                {createTableRow(record.factors.TAILWIND, index, <AirIcon sx={{ color: "#fff" }}/>)}
+                                                {createTableRow(record.factors.CLOUDBASE, index, <CloudIcon sx={{ color: "#fff" }}/>)}
+                                                {createTableRow(record.factors.RAIN, index, <WaterDropIcon sx={{ color: "#fff" }}/>)}
 
                                             </Grid>
 

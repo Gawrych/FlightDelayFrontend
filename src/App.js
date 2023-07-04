@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import React from 'react';
 import SearchFlight from "./components/SearchFlight";
 import NextDaysWeather from "./components/NextDaysWeather";
 import DelayCalculation from "./components/DelayCalculation";
-import {Box, Container, Grid, CssBaseline} from "@mui/material";
+import {Box, CssBaseline} from "@mui/material";
 import PlaneVertical from "./static/images/planeVertical.jpg";
-import axios from "axios"
+
 
 function App() {
     const [flightData, setFlightData] = useState(null);
@@ -27,7 +27,7 @@ function App() {
             <div>
                 <Box
                     sx={{
-                        backgroundImage: `url(${PlaneVertical})`,
+                        // backgroundImage: `url(${PlaneVertical})`,
                         height: "300vh",
                         width: "100%",
                         backgroundSize: "cover",
@@ -45,7 +45,7 @@ function App() {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            backgroundColor: "rgba(255, 255, 255, 0.8)",
+                            backgroundColor: "#f8f8f8",
                             padding: "2rem",
                             borderRadius: "4px",
                             boxShadow: "1",
