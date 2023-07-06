@@ -18,7 +18,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
 import LinearProgress from '@mui/material/LinearProgress';
-import Plane from "../static/images/planeVertical.jpg";
 
 
 const SearchFlight = ({ onFlightData, loadingStatus}) => {
@@ -107,208 +106,192 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
     return (
         <>
             <CssBaseline />
-                <div>
-                    <Box
-                        sx={{
-                            backgroundImage: `url(${Plane})`,
-                            height: "50vh",
-                            width: "100%",
-                            backgroundSize: "cover",
-                            backgroundRepeat: "no-repeat",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
-                    >
-                        <Container maxWidth="xl">
-                            <Box
-                                sx={{
-                                    backgroundColor: "rgba(255, 255, 255, 0.8)",
-                                    padding: "1rem",
-                                    borderRadius: "4px",
-                                    boxShadow: "1",
-                                }}
-                            >
-                                    <Grid
-                                        container
-                                        spacing={2}
-                                        justifyContent="center"
-                                        alignItems="center">
+            <Container maxWidth="xl">
+                <Box
+                    sx={{
+                        backgroundColor: "rgba(255, 255, 255, 1)",
+                        padding: "1rem",
+                        borderRadius: "4px",
+                        boxShadow: "1",
+                    }}>
+                        <Grid
+                            container
+                            spacing={2}
+                            justifyContent="center"
+                            alignItems="center">
 
-                                        <ThemeProvider theme={customTheme}>
-                                        <Grid item xs={12} sm={6} md={3} lg={2}>
-                                                <LocalizationProvider
-                                                    dateAdapter={AdapterDayjs}
-                                                >
-                                                    <DemoContainer components={["DatePicker"]}>
-                                                        <DateTimePicker
-                                                            viewRenderers={{
-                                                                hours: renderTimeViewClock,
-                                                                minutes: renderTimeViewClock,
-                                                            }}
-                                                            onChange={(date) => check(date, setDepartureDate)}
-                                                            disablePast={true}
-                                                            sx={{ width: "100%" }}
-                                                            label="Departure date"
-                                                        />
-                                                    </DemoContainer>
-                                                </LocalizationProvider>
+                            <ThemeProvider theme={customTheme}>
+                            <Grid item xs={12} sm={6} md={3} lg={2}>
+                                    <LocalizationProvider
+                                        dateAdapter={AdapterDayjs}
+                                    >
+                                        <DemoContainer components={["DatePicker"]}>
+                                            <DateTimePicker
+                                                viewRenderers={{
+                                                    hours: renderTimeViewClock,
+                                                    minutes: renderTimeViewClock,
+                                                }}
+                                                onChange={(date) => check(date, setDepartureDate)}
+                                                disablePast={true}
+                                                sx={{ width: "100%" }}
+                                                label="Departure date"
+                                            />
+                                        </DemoContainer>
+                                    </LocalizationProvider>
 
-                                        </Grid>
+                            </Grid>
 
-                                        <Grid item xs={12} sm={6} md={2} lg={3}>
+                            <Grid item xs={12} sm={6} md={2} lg={3}>
 
-                                                <Autocomplete
-                                                    id="highlights-demo"
-                                                    sx={{ width: "100%" }}
-                                                    options={items}
-                                                    inputValue={departureAirport}
-                                                    onInputChange={(event, value) =>
-                                                        setDepartureAirport(value)
-                                                    }
-                                                    filterOptions={filterOptions}
-                                                    renderInput={(params) => (
-                                                        <TextField
-                                                            {...params}
-                                                            label="Departure airport"
-                                                            margin="normal"
-                                                        />
-                                                    )}
-                                                    renderOption={(
-                                                        props,
-                                                        option,
-                                                        { inputValue }
-                                                    ) => {
-                                                        const matches = match(
-                                                            option,
-                                                            inputValue,
-                                                            {
-                                                                insideWords: true,
-                                                            }
-                                                        );
-                                                        const parts = parse(option, matches);
+                                    <Autocomplete
+                                        id="highlights-demo"
+                                        sx={{ width: "100%" }}
+                                        options={items}
+                                        inputValue={departureAirport}
+                                        onInputChange={(event, value) =>
+                                            setDepartureAirport(value)
+                                        }
+                                        filterOptions={filterOptions}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="Departure airport"
+                                                margin="normal"
+                                            />
+                                        )}
+                                        renderOption={(
+                                            props,
+                                            option,
+                                            { inputValue }
+                                        ) => {
+                                            const matches = match(
+                                                option,
+                                                inputValue,
+                                                {
+                                                    insideWords: true,
+                                                }
+                                            );
+                                            const parts = parse(option, matches);
 
-                                                        return (
-                                                            <li {...props}>
-                                                                <div>
-                                                                    {parts.map((part, index) => (
-                                                                        <span
-                                                                            key={index}
-                                                                            style={{
-                                                                                fontWeight: part.highlight
-                                                                                    ? 700
-                                                                                    : 400,
-                                                                            }}
-                                                                        >
-                                    {part.text}
-                                </span>
-                                                                    ))}
-                                                                </div>
-                                                            </li>
-                                                        );
-                                                    }}
-                                                />
-                                        </Grid>
+                                            return (
+                                                <li {...props}>
+                                                    <div>
+                                                        {parts.map((part, index) => (
+                                                            <span
+                                                                key={index}
+                                                                style={{
+                                                                    fontWeight: part.highlight
+                                                                        ? 700
+                                                                        : 400,
+                                                                }}
+                                                            >
+                        {part.text}
+                    </span>
+                                                        ))}
+                                                    </div>
+                                                </li>
+                                            );
+                                        }}
+                                    />
+                            </Grid>
 
-                                        <Grid item xs={12} sm={6} md={3} lg={2}>
+                            <Grid item xs={12} sm={6} md={3} lg={2}>
 
-                                                <LocalizationProvider
-                                                    dateAdapter={AdapterDayjs}
-                                                >
-                                                    <DemoContainer components={["DatePicker"]}>
-                                                        <DateTimePicker
-                                                            viewRenderers={{
-                                                                hours: renderTimeViewClock,
-                                                                minutes: renderTimeViewClock,
-                                                            }}
-                                                            onChange={(date) => check(date, setArrivalDate)}
-                                                            disablePast={true}
-                                                            sx={{ width: "100%" }}
-                                                            label="Arrival date"
-                                                        />
-                                                    </DemoContainer>
-                                                </LocalizationProvider>
+                                    <LocalizationProvider
+                                        dateAdapter={AdapterDayjs}
+                                    >
+                                        <DemoContainer components={["DatePicker"]}>
+                                            <DateTimePicker
+                                                viewRenderers={{
+                                                    hours: renderTimeViewClock,
+                                                    minutes: renderTimeViewClock,
+                                                }}
+                                                onChange={(date) => check(date, setArrivalDate)}
+                                                disablePast={true}
+                                                sx={{ width: "100%" }}
+                                                label="Arrival date"
+                                            />
+                                        </DemoContainer>
+                                    </LocalizationProvider>
 
-                                        </Grid>
+                            </Grid>
 
-                                        <Grid item xs={12} sm={6} md={2} lg={3}>
+                            <Grid item xs={12} sm={6} md={2} lg={3}>
 
-                                                <Autocomplete
-                                                    id="highlights-demo"
-                                                    sx={{ width: "100%" }}
-                                                    options={items}
-                                                    inputValue={arrivalAirport}
-                                                    onInputChange={(event, value) =>
-                                                        setArrivalAirport(value)
-                                                    }
-                                                    filterOptions={filterOptions}
-                                                    renderInput={(params) => (
-                                                        <TextField
-                                                            {...params}
-                                                            label="Arrival airport"
-                                                            margin="normal"
-                                                        />
-                                                    )}
-                                                    renderOption={(
-                                                        props,
-                                                        option,
-                                                        { inputValue }
-                                                    ) => {
-                                                        const matches = match(
-                                                            option,
-                                                            inputValue,
-                                                            {
-                                                                insideWords: true,
-                                                            }
-                                                        );
-                                                        const parts = parse(option, matches);
+                                    <Autocomplete
+                                        id="highlights-demo"
+                                        sx={{ width: "100%" }}
+                                        options={items}
+                                        inputValue={arrivalAirport}
+                                        onInputChange={(event, value) =>
+                                            setArrivalAirport(value)
+                                        }
+                                        filterOptions={filterOptions}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label="Arrival airport"
+                                                margin="normal"
+                                            />
+                                        )}
+                                        renderOption={(
+                                            props,
+                                            option,
+                                            { inputValue }
+                                        ) => {
+                                            const matches = match(
+                                                option,
+                                                inputValue,
+                                                {
+                                                    insideWords: true,
+                                                }
+                                            );
+                                            const parts = parse(option, matches);
 
-                                                        return (
-                                                            <li {...props}>
-                                                                <div>
-                                                                    {parts.map((part, index) => (
-                                                                        <span
-                                                                            key={index}
-                                                                            style={{
-                                                                                fontWeight: part.highlight
-                                                                                    ? 700
-                                                                                    : 400,
-                                                                            }}
-                                                                        > {part.text}
-                                                                        </span>
-                                                                    ))}
-                                                                </div>
-                                                            </li>
-                                                        );
-                                                    }}
-                                                />
+                                            return (
+                                                <li {...props}>
+                                                    <div>
+                                                        {parts.map((part, index) => (
+                                                            <span
+                                                                key={index}
+                                                                style={{
+                                                                    fontWeight: part.highlight
+                                                                        ? 700
+                                                                        : 400,
+                                                                }}
+                                                            > {part.text}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </li>
+                                            );
+                                        }}
+                                    />
 
-                                        </Grid>
-                                        <Grid item xs={12} md={12} lg={2} sx={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                        }}>
-                                            <Button
-                                                variant="contained"
-                                                startIcon={<FlightTakeoffIcon />}
-                                                size="large"
-                                                onClick={handleSubmit}
-                                            >
-                                                Check
-                                            </Button>
-                                        </Grid>
-                                        </ThemeProvider>
-                                    </Grid>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={2} sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}>
+                                <Button
+                                    variant="contained"
+                                    startIcon={<FlightTakeoffIcon />}
+                                    size="large"
+                                    onClick={handleSubmit}
+                                >
+                                    Check
+                                </Button>
+                            </Grid>
+                            </ThemeProvider>
+                        </Grid>
 
-                                    {warning && <Typography variant="body1"><span style={{ color: "red" }}>{warningText}</span></Typography>}
-                            </Box>
-                            <Box sx={{ width: '100%' }}>
-                                {loadingStatus && <LinearProgress />}
-                            </Box>
-                        </Container>
-                    </Box>
-                </div>
+                        {warning && <Typography variant="body1"><span style={{ color: "red" }}>{warningText}</span></Typography>}
+                </Box>
+                <Box sx={{ width: '100%' }}>
+                    {loadingStatus && <LinearProgress />}
+                </Box>
+            </Container>
         </>
     );
 };

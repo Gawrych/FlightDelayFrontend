@@ -77,78 +77,92 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
 
     return (
         <>
-            <CssBaseline>
-                <Container maxWidth="lg">
-                    <Grid container spacing={5}>
+            <Box
+                sx={{
+                    width: "100%",
+                    backgroundSize: "cover",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#f8f8f8",
+                    borderRadius: "4px",
+                    boxShadow: "1",
+                    paddingTop: "5rem",
+                    paddingBottom: "5rem",
+                }}>
+                <CssBaseline>
+                    <Container maxWidth="lg">
+                        <Grid container spacing={5}>
 
-                        <Grid item container xs={12} sm={12} md={6} lg={6} spacing={3} sx={{ 
-                                    display: "flex", alignContent: "flex-start"}}>
-                            <Grid item container xs={12} sm={12} md={12} lg={12}>
-                                <Typography variant="h6" >Departure airport</Typography>
-                            </Grid>
-                            
-                            <Grid item container xs={12} sm={12} md={12} lg={12} spacing={3}
-                                sx={{ display: "flex", alignItems: "center"}}>
-
-                                {departureWeatherData.map((record, index) => (
-                                    <>
-                                        <WeatherItem factor={record.VISIBILITY} index={1} icon={<VisibilityIcon sx={{ color: "#fff" }}/>} />
-                                        <WeatherItem factor={record.CROSSWIND} index={2} icon={<AirIcon sx={{ color: "#fff" }}/>} />
-                                        <WeatherItem factor={record.TAILWIND} index={3} icon={<AirIcon sx={{ color: "#fff" }}/>} />
-                                        <WeatherItem factor={record.CLOUDBASE} index={4} icon={<CloudIcon sx={{ color: "#fff" }}/>} />
-                                        <WeatherItem factor={record.RAIN} index={5} icon={<WaterDropIcon sx={{ color: "#fff" }}/>} />
-                                    </>
-                                ))}
-
-                                {departureStatisticsData.map((record, index) => (
-                                    <>
-                                        <StatisticItem factor={record.AVERAGE_MONTHLY_TRAFFIC} index={1} short={true}/>
-                                        <StatisticItem factor={record.TOP_MONTH_OF_TRAFFIC} index={2} />
-                                        <StatisticItem factor={record.AVERAGE_PRE_DEPARTURE_DELAY} index={3} />
-                                        <StatisticItem factor={record.TOP_MONTH_DELAY_IN_TAXI_OUT} index={4} />
-                                        <StatisticItem factor={record.AVERAGE_DELAY_IN_TAXI_OUT} index={5} />
-                                        <StatisticItem factor={record.TOP_MONTH_OF_PRE_DEPARTURE_DELAY} index={6} />
-                                    </>
-                                ))}
-                            </Grid>
-                        </Grid>
-
-                        <Grid item container xs={12} sm={12} md={6} lg={6} spacing={3} sx={{ 
-                                    display: "flex", alignContent: "flex-start"}}>
-                            <Grid item container xs={12} sm={12} md={12} lg={12}>
-                                <Typography variant="h6">Arrival airport</Typography>
-                            </Grid>
-                            
-                            <Grid item container xs={12} sm={12} md={12} lg={12} spacing={3} 
-                                sx={{ display: "flex", alignItems: "center"}}>
-
+                            <Grid item container xs={12} sm={12} md={6} lg={6} spacing={3} sx={{
+                                        display: "flex", alignContent: "flex-start"}}>
+                                <Grid item container xs={12} sm={12} md={12} lg={12}>
+                                    <Typography variant="h6" >Departure airport</Typography>
+                                </Grid>
                                 
-                                {arrivalWeatherData.map((record, index) => (
-                                    <>
-                                        <WeatherItem factor={record.VISIBILITY} index={index} icon={<VisibilityIcon sx={{ color: "#fff" }}/>} />
-                                        <WeatherItem factor={record.CROSSWIND} index={index} icon={<AirIcon sx={{ color: "#fff" }}/>} />
-                                        <WeatherItem factor={record.TAILWIND} index={index} icon={<AirIcon sx={{ color: "#fff" }}/>} />
-                                        <WeatherItem factor={record.CLOUDBASE} index={index} icon={<CloudIcon sx={{ color: "#fff" }}/>} />
-                                        <WeatherItem factor={record.RAIN} index={index} icon={<WaterDropIcon sx={{ color: "#fff" }}/>} />
-                                    </>
-                                ))}
+                                <Grid item container xs={12} sm={12} md={12} lg={12} spacing={3}
+                                    sx={{ display: "flex", alignItems: "center"}}>
 
-                                {arrivalStatisticsData.map((record, index) => (
-                                    <>
-                                        <StatisticItem factor={record.AVERAGE_MONTHLY_TRAFFIC} index={1} short={true}/>
-                                        <StatisticItem factor={record.TOP_MONTH_OF_TRAFFIC} index={2} />
-                                        <StatisticItem factor={record.AVERAGE_DELAY_IN_TAXI_IN_AND_ASMA} index={3} />
-                                        <StatisticItem factor={record.MOST_COMMON_DELAY_CAUSE} index={4} />
-                                        <StatisticItem factor={record.TOP_MONTH_DELAY_IN_TAXI_IN_AND_ASMA} index={5} />
-                                        <StatisticItem factor={record.AVERAGE_TIME_TO_PARTICULAR_DELAY_CAUSE} index={6} />
-                                    </>
-                                ))}
+                                    {departureWeatherData.map((record, index) => (
+                                        <>
+                                            <WeatherItem factor={record.VISIBILITY} index={1} icon={<VisibilityIcon sx={{ color: "#fff" }}/>} />
+                                            <WeatherItem factor={record.CROSSWIND} index={2} icon={<AirIcon sx={{ color: "#fff" }}/>} />
+                                            <WeatherItem factor={record.TAILWIND} index={3} icon={<AirIcon sx={{ color: "#fff" }}/>} />
+                                            <WeatherItem factor={record.CLOUDBASE} index={4} icon={<CloudIcon sx={{ color: "#fff" }}/>} />
+                                            <WeatherItem factor={record.RAIN} index={5} icon={<WaterDropIcon sx={{ color: "#fff" }}/>} />
+                                        </>
+                                    ))}
 
+                                    {departureStatisticsData.map((record, index) => (
+                                        <>
+                                            <StatisticItem factor={record.AVERAGE_MONTHLY_TRAFFIC} index={1} short={true}/>
+                                            <StatisticItem factor={record.TOP_MONTH_OF_TRAFFIC} index={2} />
+                                            <StatisticItem factor={record.AVERAGE_PRE_DEPARTURE_DELAY} index={3} />
+                                            <StatisticItem factor={record.TOP_MONTH_DELAY_IN_TAXI_OUT} index={4} />
+                                            <StatisticItem factor={record.AVERAGE_DELAY_IN_TAXI_OUT} index={5} />
+                                            <StatisticItem factor={record.TOP_MONTH_OF_PRE_DEPARTURE_DELAY} index={6} />
+                                        </>
+                                    ))}
+                                </Grid>
+                            </Grid>
+
+                            <Grid item container xs={12} sm={12} md={6} lg={6} spacing={3} sx={{ 
+                                        display: "flex", alignContent: "flex-start"}}>
+                                <Grid item container xs={12} sm={12} md={12} lg={12}>
+                                    <Typography variant="h6">Arrival airport</Typography>
+                                </Grid>
+                                
+                                <Grid item container xs={12} sm={12} md={12} lg={12} spacing={3} 
+                                    sx={{ display: "flex", alignItems: "center"}}>
+
+                                    
+                                    {arrivalWeatherData.map((record, index) => (
+                                        <>
+                                            <WeatherItem factor={record.VISIBILITY} index={index} icon={<VisibilityIcon sx={{ color: "#fff" }}/>} />
+                                            <WeatherItem factor={record.CROSSWIND} index={index} icon={<AirIcon sx={{ color: "#fff" }}/>} />
+                                            <WeatherItem factor={record.TAILWIND} index={index} icon={<AirIcon sx={{ color: "#fff" }}/>} />
+                                            <WeatherItem factor={record.CLOUDBASE} index={index} icon={<CloudIcon sx={{ color: "#fff" }}/>} />
+                                            <WeatherItem factor={record.RAIN} index={index} icon={<WaterDropIcon sx={{ color: "#fff" }}/>} />
+                                        </>
+                                    ))}
+
+                                    {arrivalStatisticsData.map((record, index) => (
+                                        <>
+                                            <StatisticItem factor={record.AVERAGE_MONTHLY_TRAFFIC} index={1} short={true}/>
+                                            <StatisticItem factor={record.TOP_MONTH_OF_TRAFFIC} index={2} />
+                                            <StatisticItem factor={record.AVERAGE_DELAY_IN_TAXI_IN_AND_ASMA} index={3} />
+                                            <StatisticItem factor={record.MOST_COMMON_DELAY_CAUSE} index={4} />
+                                            <StatisticItem factor={record.TOP_MONTH_DELAY_IN_TAXI_IN_AND_ASMA} index={5} />
+                                            <StatisticItem factor={record.AVERAGE_TIME_TO_PARTICULAR_DELAY_CAUSE} index={6} />
+                                        </>
+                                    ))}
+
+                                </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
-                </Container>
-            </CssBaseline>
+                    </Container>
+                </CssBaseline>
+            </Box>
         </>
     );
 };

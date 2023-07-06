@@ -11,7 +11,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Stack from '@mui/material/Stack';
 import AirportSelector from "./AirportSelector";
-import WeatherGrid from "./WeatherGrid"
+import WeatherGrid from "./WeatherGrid";
 
 const NEXT_WEATHER_URL = "http://localhost:8080/api/v1/weather/periods?days=5";
 
@@ -96,6 +96,23 @@ function NextDaysWeather() {
     return (
         <>
             <Container maxWidth="lg">
+
+
+                <Box
+                    sx={{
+                        width: "100%",
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                        textAlign: "center"
+                    }}>
+                
+                    <Typography variant="h5" sx={{
+                        padding: "2rem",
+                        fontStyle: "normal",
+                        fontWeight: "600",
+                    }}>Check weather conditions at airport on next 5 days</Typography>
+
+                </Box>
 
                 <Box sx={{ width: '100%' }}>
                     {loading && <LinearProgress />}
