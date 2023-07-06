@@ -7,51 +7,15 @@ import {
     Typography,
 } from "@mui/material";
 
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-
 import CloudIcon from '@mui/icons-material/Cloud';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AirIcon from '@mui/icons-material/Air';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import StatisticItem from "./StatisticItem";
+import WeatherItem from "./WeatherItem";
 
 const WEATHER_URL = "http://localhost:8080/api/v1/weather/hour";
 const STATISTICS_URL = "http://localhost:8080/api/v1/statistics/";
-
-const setColor = (influence) => {
-    let color = "black";
-
-    if (influence.toLowerCase() === "low") {
-        color = "green"
-
-    } else if (influence.toLowerCase() === "medium") {
-        color = "orange"
-
-    } else if (influence.toLowerCase() === "high") {
-        color = "red"
-    }
-
-    return color;
-}
-
-function createWeatherItem (factor, index, icon) {
-    const primaryText = <span style={{color: setColor(factor.influence_on_delay) }}> {factor.title} - {factor.influence_on_delay.toLowerCase()} influence</span>;
-    const secondaryText = factor.value + " " + factor.unit_name;
-
-    return (
-        <Grid item container xs={6} sm={6} md={6} lg={6}>
-            <List>
-                <ListItem key={index}>
-                    <ListItemIcon> {icon} </ListItemIcon>
-                    <ListItemText primary={primaryText} secondary={secondaryText} />
-                </ListItem>
-            </List>
-        </Grid>
-    );
-}
 
 const DelayCalculation = ({ flightData, fetchComplete }) => {
 
@@ -59,7 +23,6 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
     const [arrivalStatisticsData, setArrivalStatisticsData] = useState([]);
     const [departureWeatherData, setDepartureWeatherData] = useState([]);
     const [departureStatisticsData, setDepartureStatisticsData] = useState([]);
-
 
     const fetchWeather = async (airport, date, phase, variableRef) => {
 
@@ -83,7 +46,7 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
 
         const data = await fetch(STATISTICS_URL + airport, requestOptions).then(response => response.json());
 
-        variableRef(data);
+        variableRef([data]);
     };
 
     const getArrivalData = () => {
@@ -108,84 +71,84 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
         }
     }, [flightData]);
 
-    if (!arrivalWeatherData || !arrivalStatisticsData || !departureWeatherData || !departureStatisticsData) {
+    if (arrivalWeatherData.length === 0 || arrivalStatisticsData.length === 0 || departureWeatherData.length === 0 || departureStatisticsData.length === 0) {
         return;
     }
 
     return (
         <>
-            <CssBaseline />
-                <div>
-                    <Box
-                        sx={{
-                            width: "100%",
-                            backgroundSize: "cover",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            backgroundColor: "rgba(255, 255, 255, 0.8)",
-                            padding: "2rem",
-                            borderRadius: "4px",
-                            boxShadow: "1",
-                        }}
-                    >
-                        <Container maxWidth="lg">
-                            <Grid container spacing={5}>
+            <CssBaseline>
+                <Container maxWidth="lg">
+                    <Grid container spacing={5}>
 
-                                <Grid item container xs={12} sm={12} md={6} lg={6}>
-                                    <Grid item xs={12} sm={12} md={12} lg={12} >
-                                        <Typography variant="h6">Departure airport</Typography>
-                                    </Grid>
-                                    
-                                    <Grid item container xs={12} sm={12} md={12} lg={12} sx={{ alignItems: "center" }}>
-                                        {Object.values(departureStatisticsData).map((record, index) => (
-                                        
-                                            <StatisticItem factor={record} index={index} phase={"DEPARTURE"} />
-                                        ))}
-                                    </Grid>
+                        <Grid item container xs={12} sm={12} md={6} lg={6} spacing={3} sx={{ 
+                                    display: "flex", alignContent: "flex-start"}}>
+                            <Grid item container xs={12} sm={12} md={12} lg={12}>
+                                <Typography variant="h6" >Departure airport</Typography>
+                            </Grid>
+                            
+                            <Grid item container xs={12} sm={12} md={12} lg={12} spacing={3}
+                                sx={{ display: "flex", alignItems: "center"}}>
 
-                                    <Grid item container xs={12} sm={12} md={12} lg={12} sx={{ alignItems: "center" }}>
-                                        {departureWeatherData.map((record, index) => (
-                                            <>
-                                                {createWeatherItem(record.VISIBILITY, index, <VisibilityIcon sx={{ color: "#AAAAAA" }}/>)}
-                                                {createWeatherItem(record.CROSSWIND, index, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
-                                                {createWeatherItem(record.TAILWIND, index, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
-                                                {createWeatherItem(record.CLOUDBASE, index, <CloudIcon sx={{ color: "#00bbf9" }}/>)}
-                                                {createWeatherItem(record.RAIN, index, <WaterDropIcon sx={{ color: "#00bbf9" }}/>)}
-                                            </>
-                                        ))}
-                                    </Grid>
-                                </Grid>
+                                {departureWeatherData.map((record, index) => (
+                                    <>
+                                        <WeatherItem factor={record.VISIBILITY} index={1} icon={<VisibilityIcon sx={{ color: "#fff" }}/>} />
+                                        <WeatherItem factor={record.CROSSWIND} index={2} icon={<AirIcon sx={{ color: "#fff" }}/>} />
+                                        <WeatherItem factor={record.TAILWIND} index={3} icon={<AirIcon sx={{ color: "#fff" }}/>} />
+                                        <WeatherItem factor={record.CLOUDBASE} index={4} icon={<CloudIcon sx={{ color: "#fff" }}/>} />
+                                        <WeatherItem factor={record.RAIN} index={5} icon={<WaterDropIcon sx={{ color: "#fff" }}/>} />
+                                    </>
+                                ))}
 
-                                <Grid item container xs={12} sm={12} md={6} lg={6}>
-                                    <Grid item xs={12} sm={12} md={12} lg={12} >
-                                        <Typography variant="h6" >Arrival airport</Typography>
-                                    </Grid>
+                                {departureStatisticsData.map((record, index) => (
+                                    <>
+                                        <StatisticItem factor={record.AVERAGE_MONTHLY_TRAFFIC} index={1} short={true}/>
+                                        <StatisticItem factor={record.TOP_MONTH_OF_TRAFFIC} index={2} />
+                                        <StatisticItem factor={record.AVERAGE_PRE_DEPARTURE_DELAY} index={3} />
+                                        <StatisticItem factor={record.TOP_MONTH_DELAY_IN_TAXI_OUT} index={4} />
+                                        <StatisticItem factor={record.AVERAGE_DELAY_IN_TAXI_OUT} index={5} />
+                                        <StatisticItem factor={record.TOP_MONTH_OF_PRE_DEPARTURE_DELAY} index={6} />
+                                    </>
+                                ))}
+                            </Grid>
+                        </Grid>
 
-                                    <Grid item container xs={12} sm={12} md={12} lg={12} sx={{ alignItems: "center" }}>
-                                        {Object.values(arrivalStatisticsData).map((record, index) => (
-                                        
-                                            <StatisticItem factor={record} index={index} phase={"ARRIVAL"} />
-                                        ))}
-                                    </Grid>
+                        <Grid item container xs={12} sm={12} md={6} lg={6} spacing={3} sx={{ 
+                                    display: "flex", alignContent: "flex-start"}}>
+                            <Grid item container xs={12} sm={12} md={12} lg={12}>
+                                <Typography variant="h6">Arrival airport</Typography>
+                            </Grid>
+                            
+                            <Grid item container xs={12} sm={12} md={12} lg={12} spacing={3} 
+                                sx={{ display: "flex", alignItems: "center"}}>
 
-                                    <Grid item container xs={12} sm={12} md={12} lg={12} sx={{ alignItems: "center" }}>
-                                        {arrivalWeatherData.map((record, index) => (
-                                            <>
-                                                {createWeatherItem(record.VISIBILITY, index, <VisibilityIcon sx={{ color: "#AAAAAA" }}/>)}
-                                                {createWeatherItem(record.CROSSWIND, index, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
-                                                {createWeatherItem(record.TAILWIND, index, <AirIcon sx={{ color: "#AAAAAA" }}/>)}
-                                                {createWeatherItem(record.CLOUDBASE, index, <CloudIcon sx={{ color: "#00bbf9" }}/>)}
-                                                {createWeatherItem(record.RAIN, index, <WaterDropIcon sx={{ color: "#00bbf9" }}/>)}
-                                            </>
-                                        ))}
-                                    </Grid>
-                                </Grid>
+                                
+                                {arrivalWeatherData.map((record, index) => (
+                                    <>
+                                        <WeatherItem factor={record.VISIBILITY} index={index} icon={<VisibilityIcon sx={{ color: "#fff" }}/>} />
+                                        <WeatherItem factor={record.CROSSWIND} index={index} icon={<AirIcon sx={{ color: "#fff" }}/>} />
+                                        <WeatherItem factor={record.TAILWIND} index={index} icon={<AirIcon sx={{ color: "#fff" }}/>} />
+                                        <WeatherItem factor={record.CLOUDBASE} index={index} icon={<CloudIcon sx={{ color: "#fff" }}/>} />
+                                        <WeatherItem factor={record.RAIN} index={index} icon={<WaterDropIcon sx={{ color: "#fff" }}/>} />
+                                    </>
+                                ))}
+
+                                {arrivalStatisticsData.map((record, index) => (
+                                    <>
+                                        <StatisticItem factor={record.AVERAGE_MONTHLY_TRAFFIC} index={1} short={true}/>
+                                        <StatisticItem factor={record.TOP_MONTH_OF_TRAFFIC} index={2} />
+                                        <StatisticItem factor={record.AVERAGE_DELAY_IN_TAXI_IN_AND_ASMA} index={3} />
+                                        <StatisticItem factor={record.MOST_COMMON_DELAY_CAUSE} index={4} />
+                                        <StatisticItem factor={record.TOP_MONTH_DELAY_IN_TAXI_IN_AND_ASMA} index={5} />
+                                        <StatisticItem factor={record.AVERAGE_TIME_TO_PARTICULAR_DELAY_CAUSE} index={6} />
+                                    </>
+                                ))}
 
                             </Grid>
-                        </Container>
-                    </Box>
-                </div>
+                        </Grid>
+                    </Grid>
+                </Container>
+            </CssBaseline>
         </>
     );
 };

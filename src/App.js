@@ -23,8 +23,6 @@ function App() {
     return (
         <>
         <CssBaseline />
-        <main>
-            <div>
                 <Box
                     sx={{
                         // backgroundImage: `url(${PlaneVertical})`,
@@ -55,8 +53,6 @@ function App() {
                     
                     </Box>
                 </Box>
-            </div>
-        </main>
         </>
     );
 }
