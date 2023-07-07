@@ -58,7 +58,7 @@ function createStatisticItemAverage (factor, index, short) {
     let icon = <StackedBarChartIcon sx={{ color: "#fff" }} />;
 
     if (factor.unit_symbol === "num") {
-        unit = "/mo.";
+        unit = "/mo";
     }
 
     const secondaryText = value + " " + unit;

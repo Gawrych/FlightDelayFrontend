@@ -84,7 +84,6 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    backgroundColor: "#f8f8f8",
                     borderRadius: "4px",
                     boxShadow: "1",
                     paddingTop: "5rem",

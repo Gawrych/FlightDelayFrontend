@@ -97,23 +97,6 @@ function NextDaysWeather() {
         <>
             <Container maxWidth="lg">
 
-
-                <Box
-                    sx={{
-                        width: "100%",
-                        backgroundSize: "cover",
-                        backgroundRepeat: "no-repeat",
-                        textAlign: "center"
-                    }}>
-                
-                    <Typography variant="h5" sx={{
-                        padding: "2rem",
-                        fontStyle: "normal",
-                        fontWeight: "600",
-                    }}>Check weather conditions at airport on next 5 days</Typography>
-
-                </Box>
-
                 <Box sx={{ width: '100%' }}>
                     {loading && <LinearProgress />}
                 </Box>
@@ -122,9 +105,9 @@ function NextDaysWeather() {
                     <Box>
                         <Grid container justifyContent="center" sx={{ display: 'flex', alignItems: 'center' }}>
 
-                            <Grid item container xs={12} sm={12} md={7} lg={8} sx={{ paddingTop: 5, paddingBottom: 5 }}>
+                            <Grid item container xs={12} sm={12} md={7} lg={8} sx={{ paddingTop: "2rem", paddingBottom: "2rem" }}>
                                 <Stack direction="row" alignItems="center" gap={1}>
-                                    <Typography variant="h5">Forecast</Typography>
+                                    <Typography variant="h5">Airport weather forecast</Typography>
                                     <InfoOutlinedIcon />
                                 </Stack>
                             </Grid>

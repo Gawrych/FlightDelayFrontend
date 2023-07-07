@@ -73,7 +73,7 @@ const Introduction = () => {
                                     alignItems: "center",
                                     justifyContent: "flex-start",}}>
 
-                                    <Grid item xs={12} sm={12} md={6} lg={8}>
+                                    <Grid item xs={12} sm={12} md={6} lg={10}>
                                         
                                         <Typography variant="h3">Airport weather forecast <CloudIcon sx={{fontSize: 40}} /></Typography>
                                     

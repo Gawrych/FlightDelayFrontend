@@ -21,7 +21,8 @@ function AirportSelector ({options, setNewAirportForWeather, onAccept, defaultVa
     return (
         <Grid item container xs={12} sm={12} md={5} lg={4} sx={{ alignItems: "center", display: 'flex', justifyContent: 'space-between'}}>
             <Grid item xs={3} sm={3} md={3} lg={3}>
-                <Button variant="contained" startIcon={<FlightTakeoffIcon />} onClick={onAccept} size="medium"></Button>
+                <Button variant="contained" startIcon={<FlightTakeoffIcon />} onClick={onAccept} size="medium" 
+                sx={{ backgroundColor: "#4645d7", '&:hover': { backgroundColor: '#fff',color: '#3c52b2'}, }}></Button>
             </Grid>
 
             <Grid item xs={9} sm={9} md={9} lg={9} sx={{ display: 'flex', justifyContent: 'flex-end'}}>

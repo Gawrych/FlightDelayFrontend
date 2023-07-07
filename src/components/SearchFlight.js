@@ -109,9 +109,9 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
             <Container maxWidth="xl">
                 <Box
                     sx={{
-                        backgroundColor: "rgba(255, 255, 255, 1)",
-                        padding: "1rem",
-                        borderRadius: "4px",
+                        backgroundColor: "#fff",
+                        padding: "2rem",
+                        borderRadius: "1rem",
                         boxShadow: "1",
                     }}>
                         <Grid
@@ -279,6 +279,7 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
                                     startIcon={<FlightTakeoffIcon />}
                                     size="large"
                                     onClick={handleSubmit}
+                                    sx={{ backgroundColor: "#4645d7", '&:hover': { backgroundColor: '#fff',color: '#3c52b2'}, }}
                                 >
                                     Check
                                 </Button>
@@ -289,7 +290,7 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
                         {warning && <Typography variant="body1"><span style={{ color: "red" }}>{warningText}</span></Typography>}
                 </Box>
                 <Box sx={{ width: '100%' }}>
-                    {loadingStatus && <LinearProgress />}
+                    {loadingStatus && <LinearProgress sx={{backgroundColor: "#fff"}} />}
                 </Box>
             </Container>
         </>
