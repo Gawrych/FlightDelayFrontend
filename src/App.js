@@ -93,7 +93,7 @@ function App() {
                                     display: "flex",
                                     alignItems: "flex-end"}}>
                                     
-                                    <InfoOutlinedIcon sx={{fontSize: 25}} />
+                                    <InfoOutlinedIcon sx={{ fontSize: 25 }} />
                                     
                                 </Stack>
 
@@ -103,7 +103,7 @@ function App() {
                                     alignContent: "flex-end",
                                     justifyContent: "flex-end"}}>
 
-                                    <Typography variant="h5">Let's check</Typography>
+                                    <Typography variant="h5">Check before you buy a ticket</Typography>
                                     <SwitchAccessShortcutIcon sx={{transform: 'rotate(180deg)', alignSelf: "flex-end", fontSize: 30}} />
                                 </Stack>
                                 

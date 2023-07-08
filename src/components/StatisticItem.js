@@ -9,7 +9,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import TodayIcon from '@mui/icons-material/Today';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -99,7 +98,7 @@ function createStatisticItemTopValueWithDate (factor, index, short) {
     let icon = <TodayIcon sx={{ color: "#fff" }} />;
 
     if (factor.unit_symbol === "txt/num") {
-        unit = "dep/arr";
+        unit = "/mo";
     }
 
     const date = new Date(factor.date);

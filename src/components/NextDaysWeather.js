@@ -12,6 +12,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Stack from '@mui/material/Stack';
 import AirportSelector from "./AirportSelector";
 import WeatherGrid from "./WeatherGrid";
+import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 
 const NEXT_WEATHER_URL = "http://localhost:8080/api/v1/weather/periods?days=5";
 
@@ -108,7 +109,7 @@ function NextDaysWeather() {
                             <Grid item container xs={12} sm={12} md={7} lg={8} sx={{ paddingTop: "2rem", paddingBottom: "2rem" }}>
                                 <Stack direction="row" alignItems="center" gap={1}>
                                     <Typography variant="h5">Airport weather forecast</Typography>
-                                    <InfoOutlinedIcon />
+                                    <CloudQueueIcon sx={{color: "#4645d8" }}/>
                                 </Stack>
                             </Grid>
 

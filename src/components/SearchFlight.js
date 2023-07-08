@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, moment } from "react";
 import {
     Box,
     Container, createTheme,
@@ -18,7 +18,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
 import LinearProgress from '@mui/material/LinearProgress';
-
 
 const SearchFlight = ({ onFlightData, loadingStatus}) => {
     const [items, setItems] = useState([]);
@@ -63,19 +62,25 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
 
         if (arrivalAirport === "" || departureAirport === "") {
             setWarning(true);
-            setWarningText("You have to select airports and dates");
+            setWarningText("Please select both airports and dates");
             return;
         }
 
         if (arrivalAirport === departureAirport) {
             setWarning(true);
-            setWarningText("Airports must be differents");
+            setWarningText("Please select different airports");
             return;
         }
 
         if (arrivalDate === departureDate) {
             setWarning(true);
-            setWarningText("Dates must be differents");
+            setWarningText("Please select an arrival date that is after the departure date");
+            return;
+        }
+
+        if (departureDate > arrivalDate) {
+            setWarning(true);
+            setWarningText("Please select an arrival date that is after the departure date");
             return;
         }
 
