@@ -48,19 +48,23 @@ const WeatherItem = ({ factor, index, icon, longGrid }) => {
         widthOnGrid = 12;
     }
 
+    const darkColor = setDarkColor(factor.influence_on_delay);
+
     return (
         <Grid item xs={6} sm={6} md={6} lg={widthOnGrid}>
             <List sx={{
                     backgroundColor: setColor(factor.influence_on_delay),
                     padding: "0.3rem",
-                    borderRadius: "15px",
-                    // height: "105px",
+                    borderRadius: "5px",
                     display: "flex", 
-                    alignItems: "center"}}>
+                    alignItems: "center",
+                    borderBottomWidth: "1px",
+                    borderBottomColor: darkColor,
+                    borderBottomStyle: "solid",}}>
                 <ListItem key={index}>
                         <ListItemAvatar>
                             <Avatar sx={{
-                                backgroundColor: setDarkColor(factor.influence_on_delay)}}>
+                                backgroundColor: darkColor}}>
                                 {icon}
                             </Avatar>
                         </ListItemAvatar>

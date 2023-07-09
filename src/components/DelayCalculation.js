@@ -16,6 +16,7 @@ import WeatherItem from "./WeatherItem";
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import FlightLandIcon from '@mui/icons-material/FlightLand';
 import DelayTimeCalculator from "./DelayTimeCalculator";
+import StatisticField from "./StatisticField";
 
 const WEATHER_URL = "http://localhost:8080/api/v1/weather/hour";
 const STATISTICS_URL = "http://localhost:8080/api/v1/statistics/";
@@ -96,18 +97,19 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
                     <Container maxWidth="lg">
                         <Grid container spacing={3} sx={{display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "7rem"}}>
 
-                            <Grid item xs={6} sm={12} md={6} lg={2} sx={{display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column",}}>
+                            <Grid item xs={12} sm={12} md={12} lg={4} sx={{display: "flex", alignItems: "flex-end", justifyContent: "center",}}>
                                     <Box
                                         sx={{
                                             width: "100%",
                                             backgroundSize: "cover",
                                             display: "flex",
-                                            alignItems: "flex-start",
-                                            justifyContent: "flex-start",
-                                            borderRadius: "1rem",
-                                            marginBottom: "2rem",
+                                            flexDirection: "column",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            textAlign: "center",
                                         }}>
-                                            <FlightTakeoffIcon sx={{ color: "#4645d8" }} />
+                                            <Typography variant="h5" sx={{ fontWeight: "600", color: "#4645d7" }}>0.28</Typography>
+                                            <Typography variant="body2">Depaprture airport statistic</Typography>
                                     </Box>
                                     <Box
                                         sx={{
@@ -117,97 +119,71 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
                                             flexDirection: "column",
                                             alignItems: "center",
                                             justifyContent: "center",
-                                            borderRadius: "1rem",
                                         }}>
                                             <Typography variant="h4" sx={{ fontWeight: "600", color: "#4645d7" }}>Low</Typography>
+                                            <Typography variant="body2">The probability of delays</Typography>
                                     </Box>
-                                    <Box
-                                        sx={{
-                                            width: "100%",
-                                            backgroundSize: "cover",
-                                            display: "flex",
-                                            flexDirection: "row",
-                                            alignItems: "flex-end",
-                                            justifyContent: "center",
-                                            textAlign: "center",
-                                        }}>
+                            </Grid>
 
-                                        <Typography variant="body2">probability on delay {'>'} 15 min on departure caused by weather</Typography>
-                                    </Box>
-                                </Grid>
-
-                                <Grid item xs={6} sm={12} md={12} lg={4} sx={{display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", marginBottom: "2rem"}}>
-                                    <Box
-                                        sx={{
-                                            width: "100%",
-                                            backgroundSize: "cover",
-                                            display: "flex",
-                                            flexDirection: "row",
-                                            alignItems: "flex-end",
-                                            justifyContent: "center",
-                                            textAlign: "center",
-                                        }}>
-                                            <Typography variant="h3" sx={{ fontWeight: "600", color: "#4645d7" }}> 
-                                                <DelayTimeCalculator arrivalStatisticsData={arrivalStatisticsData} departureStatisticsData={departureStatisticsData} />
-                                            </Typography>
-                                            <Typography variant="h5" sx={{ fontWeight: "600", color: "#4645d7" }}>&nbsp;min</Typography>
-                                    </Box>
-                                    <Box
-                                        sx={{
-                                            width: "100%",
-                                            backgroundSize: "cover",
-                                            display: "flex",
-                                            flexDirection: "row",
-                                            alignItems: "flex-end",
-                                            justifyContent: "center",
-                                            textAlign: "center",
-                                        }}>
-                                            <Typography variant="body2" sx={{ width: "50%" }}>Probability delay time based on weather and statistics</Typography>
-                                    </Box>
-                                </Grid>
-
-                                <Grid item xs={6} sm={12} md={6} lg={2} sx={{display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column"}}>
+                            <Grid item xs={12} sm={12} md={12} lg={2} sx={{display: "flex", alignItems: "flex-end", justifyContent: "center", flexDirection: "column", marginBottom: "1rem"}}>
                                 <Box
-                                        sx={{
-                                            width: "100%",
-                                            backgroundSize: "cover",
-                                            display: "flex",
-                                            alignItems: "flex-start",
-                                            justifyContent: "flex-end",
-                                            borderRadius: "1rem",
-                                            marginBottom: "2rem",
-                                        }}>
-                                            <FlightLandIcon sx={{ color: "#4645d8" }} />
-                                    </Box>
-                                    <Box
-                                        sx={{
-                                            width: "100%",
-                                            backgroundSize: "cover",
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            borderRadius: "1rem",
-                                            textAlign: "center",
-                                        }}>
-                                            <Typography variant="h4" sx={{ fontWeight: "600", color: "#4645d7" }}>High</Typography>
-                                    </Box>
-                                    <Box
-                                        sx={{
-                                            width: "100%",
-                                            backgroundSize: "cover",
-                                            display: "flex",
-                                            flexDirection: "row",
-                                            alignItems: "flex-end",
-                                            justifyContent: "center",
-                                            textAlign: "center",
-                                        }}>
-                                        <Typography variant="body2">probability on delay {'>'} 15 min on arrival caused by weather</Typography>
+                                    sx={{
+                                        width: "100%",
+                                        display: "flex",
+                                        alignItems: "flex-end",
+                                        justifyContent: "center",
+                                        color: "#4645d7",
+                                        
+                                    }}>
+                                    <Typography variant="h3" component="span" sx={{ fontWeight: "600" }}> 
+                                        5 - <DelayTimeCalculator arrivalStatisticsData={arrivalStatisticsData} departureStatisticsData={departureStatisticsData} /> 
+                                    </Typography>
+                                    <Typography variant="h5" component="span" sx={{ fontWeight: "600" }}>&nbsp;min</Typography>
+                                </Box>
+
+                                <Box
+                                    sx={{
+                                        width: "100%",
+                                        display: "flex",
+                                        alignItems: "flex-end",
+                                        justifyContent: "center",
+                                    }}>
+                                        <Typography variant="body2">The estimated delay time</Typography>
 
                                     </Box>
-                                </Grid>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={6} lg={4} sx={{display: "flex", alignItems: "flex-end", justifyContent: "center",}}>
+                                <Box
+                                    sx={{
+                                        width: "100%",
+                                        backgroundSize: "cover",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}>
+                                        <Typography variant="h4" sx={{ fontWeight: "600", color: "#4645d7" }}>Low</Typography>
+                                        <Typography variant="body2">The probability of delays</Typography>
+                                </Box>
+                                <Box
+                                    sx={{
+                                        width: "100%",
+                                        backgroundSize: "cover",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        borderRadius: "1rem",
+                                        textAlign: "center",
+                                    }}>
+                                        <Typography variant="h5" sx={{ fontWeight: "600", color: "#4645d7" }}>0.28</Typography>
+                                        <Typography variant="body2">Depaprture airport statistic</Typography>
+                                </Box>
+                            </Grid>
 
                         </Grid>
+
+                        <StatisticField />
 
                         <Grid container spacing={5}>
 

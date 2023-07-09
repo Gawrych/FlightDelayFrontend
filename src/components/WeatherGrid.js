@@ -13,6 +13,7 @@ import CloudIcon from '@mui/icons-material/Cloud';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Chip from '@mui/material/Chip';
 import WeatherItem from "./WeatherItem";
+import { BorderColor } from "@mui/icons-material";
 
 
 const WeatherGrid = ({ recordChangeHandle }) => {
@@ -107,6 +108,7 @@ const WeatherGrid = ({ recordChangeHandle }) => {
     const createSummaryRow = (record) => {
         const finalInfluence = setPeriodFactorInfluence(record.factors);
         const color = setColor(finalInfluence);
+        const darkColor = setDarkColor(finalInfluence);
 
         return (
             <AccordionSummary
@@ -116,6 +118,9 @@ const WeatherGrid = ({ recordChangeHandle }) => {
                 sx={{
                     backgroundColor: color,
                     textAlign: "center",
+                    borderBottomWidth: "2px",
+                    borderBottomColor: darkColor,
+                    borderBottomStyle: "solid",
                 }}
             >
                 <Typography sx={{ width: '23%', flexShrink: 0, alignSelf: "center" }}>
@@ -156,7 +161,7 @@ const WeatherGrid = ({ recordChangeHandle }) => {
 
             {records.map((record, index) => (
                 <Grid item xs={12} sm={12} md={6} lg={6} >
-                    <Accordion>
+                    <Accordion sx={{ borderWidth: "2" }}>
                         
                         {createSummaryRow(record)}
 
@@ -165,8 +170,7 @@ const WeatherGrid = ({ recordChangeHandle }) => {
                             marginTop: "20px"
                         }}>
 
-                            <Grid container
-                                spacing={4}>
+                            <Grid item container spacing={4}>
 
                                 <WeatherItem factor={record.factors.VISIBILITY} index={index} icon={<VisibilityIcon sx={{ color: "#fff" }}/>} />
                                 <WeatherItem factor={record.factors.CROSSWIND} index={index} icon={<AirIcon sx={{ color: "#fff" }}/>} />

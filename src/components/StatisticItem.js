@@ -77,7 +77,10 @@ function createStatisticItemAverage (factor, index, short) {
             <List sx={{
                 backgroundColor: "#E4F1FF",
                 padding: "0.3rem",
-                borderRadius: "15px"}}>
+                borderRadius: "5px",
+                borderBottomWidth: "1px",
+                borderBottomColor: "#2969EA",
+                borderBottomStyle: "solid",}}>
                 <ListItem key={index}>
                     <ListItemAvatar>
                             <Avatar sx={{ backgroundColor: "#2969EA" }}>
@@ -114,7 +117,10 @@ function createStatisticItemTopValueWithDate (factor, index, short) {
             <List sx={{
                 backgroundColor: "#E4F1FF",
                 padding: "0.3rem",
-                borderRadius: "15px"}}>
+                borderRadius: "5px",
+                borderBottomWidth: "1px",
+                borderBottomColor: "#2969EA",
+                borderBottomStyle: "solid",}}>
                 <ListItem key={index}>
                     <ListItemAvatar>
                             <Avatar sx={{ backgroundColor: "#2969EA" }}>
@@ -167,7 +173,10 @@ function createStatisticItemListOfValuesWithText (factor, index, short) {
             <List sx={{
                 backgroundColor: "#E4F1FF",
                 padding: "0.3rem",
-                borderRadius: "15px"}}>
+                borderRadius: "5px",
+                borderBottomWidth: "1px",
+                borderBottomColor: "#2969EA",
+                borderBottomStyle: "solid",}}>
                 <ListItem key={index}>
                     <ListItemAvatar>
                             <Avatar sx={{ backgroundColor: "#2969EA" }}>
