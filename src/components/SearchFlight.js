@@ -43,10 +43,6 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
         // TODO: Sort airports by region to filter out non-Europe airports
     });
 
-    const getIcaoCode = (selectedValue) => {
-        return Airports.find((item) => item.name === selectedValue).ident;
-    };
-
     const check = (newDate, setDateFieldFunction) => {
         const dateInDate = new Date(newDate);
         const year = dateInDate.getFullYear();
@@ -87,8 +83,8 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
         setWarning(false);
 
         const flightData = {
-            arrivalAirport: getIcaoCode(arrivalAirport),
-            departureAirport: getIcaoCode(departureAirport),
+            arrivalAirport: arrivalAirport,
+            departureAirport: departureAirport,
             arrivalDate: arrivalDate,
             departureDate: departureDate,
         };

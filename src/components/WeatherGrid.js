@@ -13,16 +13,12 @@ import CloudIcon from '@mui/icons-material/Cloud';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Chip from '@mui/material/Chip';
 import WeatherItem from "./WeatherItem";
-import { BorderColor } from "@mui/icons-material";
 
 
 const WeatherGrid = ({ recordChangeHandle }) => {
     const [records, setRecords] = useState([]);
 
     useEffect(() => {
-        console.log("Hello my friend");
-        console.log(recordChangeHandle());
-        console.log(records);
         if (records !== recordChangeHandle()) {
             setRecords(recordChangeHandle());
         }
@@ -40,17 +36,18 @@ const WeatherGrid = ({ recordChangeHandle }) => {
     const setPeriodFactorInfluence = (factorsObject) => {
         let periodInfluence = "LOW";
 
+        console.log(factorsObject);
+
         Object.values(factorsObject).map((factor) => {
+
 
             if (factor.influence_on_delay === "MEDIUM") {
                 periodInfluence = "MEDIUM";
 
             } else if (factor.influence_on_delay === "HIGH") {
                 periodInfluence = "HIGH";
-                return 0;
+                return;
             }
-
-            return 0;
         });
 
         return capitalizeFirstLowercaseRest(periodInfluence);
@@ -118,7 +115,7 @@ const WeatherGrid = ({ recordChangeHandle }) => {
                 sx={{
                     backgroundColor: color,
                     textAlign: "center",
-                    borderBottomWidth: "2px",
+                    borderBottomWidth: "1px",
                     borderBottomColor: darkColor,
                     borderBottomStyle: "solid",
                 }}

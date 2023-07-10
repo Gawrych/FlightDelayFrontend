@@ -8,7 +8,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Airports from "../static/json/Airports.json";
 import LinearProgress from '@mui/material/LinearProgress';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Stack from '@mui/material/Stack';
 import AirportSelector from "./AirportSelector";
 import WeatherGrid from "./WeatherGrid";
@@ -25,11 +24,11 @@ function NextDaysWeather() {
 
     const setNewAirportForWeather = useCallback(val => {
         setNextDayWeatherAirport(val);
-        console.log("In main", val);
-        console.log("In main", nextDayWeatherAirport);
     });
     
     const fetchNextDaysWeather = useCallback(async () => {
+        console.log(nextDayWeatherAirportIcao);
+
         let requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept-Language': 'en-EN' },
@@ -39,6 +38,8 @@ function NextDaysWeather() {
         const data = await fetch(NEXT_WEATHER_URL, requestOptions)
             .then(response => response.json());
 
+        console.log(data);
+        
         setNextDaysWeatherRecords(data);
         setLoading(false);
       }, [nextDayWeatherAirportIcao]);

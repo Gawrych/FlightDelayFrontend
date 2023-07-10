@@ -1,6 +1,7 @@
 import React from "react";
 import {
     Grid,
+    Tooltip,
 } from "@mui/material";
 
 import List from '@mui/material/List';
@@ -183,7 +184,9 @@ function createStatisticItemListOfValuesWithText (factor, index, short) {
                                 {icon}
                             </Avatar>
                         </ListItemAvatar>
-                    <ListItemText primary={name} secondary={secondaryText} />
+                        <Tooltip title="Cause/group" placement="bottom-start">
+                            <ListItemText primary={name} secondary={secondaryText} />
+                        </Tooltip>
                 </ListItem>
             </List>
         </Grid>
@@ -204,17 +207,11 @@ function createStatisticItemWithNoData (factor, index, short) {
             <List>
                 <ListItem key={index}>
                     <ListItemIcon> {icon} </ListItemIcon>
-                    <ListItemText primary={name} secondary={"No data"} />
+                    <ListItemText primaryTypographyProps={{ color: "#bebdc0" }} secondaryTypographyProps={{ color: "#bebdc0"}} primary={name} secondary={"No data"} />
                 </ListItem>
             </List>
         </Grid>
     );
 }
-// E4F1FF
-// 2969EA
-// F0E6FF
-// 9959fa
-// FCF0DC
-// f2cc8f
 
 export default StatisticItem;

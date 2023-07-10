@@ -1,80 +1,140 @@
 import React, { useState, useEffect } from "react";
 import {
     Box,
-    Container,
-    CssBaseline,
     Grid,
     Typography,
     Stack,
-    Chip,
+    Tooltip,
 } from "@mui/material";
-import CloudIcon from '@mui/icons-material/Cloud';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import AirIcon from '@mui/icons-material/Air';
-import WaterDropIcon from '@mui/icons-material/WaterDrop';
-import StatisticItem from "./StatisticItem";
-import WeatherItem from "./WeatherItem";
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import FlightLandIcon from '@mui/icons-material/FlightLand';
-import DelayTimeCalculator from "./DelayTimeCalculator";
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import { calculateRanking, calculateDelayTime, calculatePercentageChance, calculateForecastToDelayChance } from "./DelayTimeCalculator";
 
-const StatisticField = ({  }) => {
+const StatisticField = ({ phase, statisticsData, weatherData, airportName, nextDaysWeatherData }) => {
+    const [airportChangeByWeather, setAirportChangeByWeather] = useState("");
+
+    let icon = "";
+
+    const iconStyle = {
+        color: "#4645d7", fontSize: "1.8rem", backgroundColor: "#E4F1FF", padding: "0.2rem", borderRadius: "0.3rem", marginRight: "0.5rem"
+    };
+
+    if (phase === "Departure") {
+        icon = <FlightTakeoffIcon  style={iconStyle}/>;
+    } else {
+        icon = <FlightLandIcon style={iconStyle} />;
+    }
+
+    const airportType = phase + " airport";
+
+    useEffect(() => {
+        console.log(nextDaysWeatherData);
+        if (nextDaysWeatherData !== null) {
+            console.log(nextDaysWeatherData);
+            const increaseByWeather = calculateForecastToDelayChance(nextDaysWeatherData);
+            if (increaseByWeather === 1) {
+                setAirportChangeByWeather("will increase");
+            } else if (increaseByWeather === 2) {
+                setAirportChangeByWeather("will increase significantly");
+            }
+        }
+    }, [nextDaysWeatherData]);
 
     return (
-        <Grid item xs={12} sm={6} md={6} lg={2}>
-            <Box sx={{
+        <Grid item xs={12} sm={12} md={5} lg={5}>
+            <Box gap={3} sx={{
                         width: "100%",
                         display: "flex",
                         flexDirection: "column",
+                        padding: "2rem",
+                        paddingTop: "1rem",
+                        boxShadow: "2",
+                        borderBottomWidth: "1px",
+                        borderBottomColor: "#2969EA",
+                        borderBottomStyle: "solid",
                     }}>
                 <Box
                     sx={{
                         width: "100%",
                         display: "flex",
                         alignItems: "flex-start",
-                        justifyContent: "space-between",
+                        justifyContent: "flex-start",
                     }}>
-                        <Stack direction="row" gap={1} sx={{
+                        
+                        <Tooltip title={airportType}>
+
+                            {icon}
+
+                        </Tooltip>
+
+                        <Tooltip title={airportType}>
+
+                            <Typography variant="title">{airportName}</Typography>
+
+                        </Tooltip>
+                </Box>
+                <Box
+                    sx={{
+                        width: "100%",
+                        backgroundSize: "cover",
                         display: "flex",
                         alignItems: "center",
+                        justifyContent: "space-between",
                     }}>
-                            <FlightTakeoffIcon sx={{ color: "#4645d7" }} />
-                            <Typography variant="h6">Delay chance on Warsaw Chopin Airport</Typography>
+                        <Stack width="70%">
+                            <Tooltip title="Delay chance" placement="bottom-start">
+                                <Typography variant="h4" sx={{ fontWeight: "600", color: "#4645d7" }}>{calculatePercentageChance(statisticsData, weatherData)}%</Typography>
+                            </Tooltip>
+
+                            {airportChangeByWeather && <Typography variant="body2" sx={{ fontWeight: "600", color: "#e69241"}}>The probability of delays {airportChangeByWeather} in the upcoming days</Typography>}
                             
                         </Stack>
 
-                        <InfoOutlinedIcon />
+                        <Tooltip title="On this airport delays are rarely and short">
+                            <Stack  sx={{ fontWeight: "600", color: "#4645d7", display: "flex", alignItems: "center", width:"30%" }}>
+                                <ThumbUpAltIcon sx={{ fontWeight: "600", color: "#4645d7" }} />
+                                <Typography variant="caption" sx={{ fontWeight: "600", color: "#4645d7" }}>Good choice</Typography>
+                                
+                            </Stack>
+                        </Tooltip>
                 </Box>
                 <Box
-                gap={2}
                     sx={{
                         width: "100%",
                         backgroundSize: "cover",
                         display: "flex",
-                        alignItems: "flex-end",
-                        justifyContent: "flex-start",
-                        marginTop: "2rem",
+                        alignItems: "center",
+                        justifyContent: "space-between",
                     }}>
-                
-                    <Typography variant="h4" sx={{ fontWeight: "600", color: "#4645d7" }}>15%</Typography>
-                    <Chip label={<Typography variant="body2" sx={{ fontWeight: "600", color: "#e69241"}}>+25%</Typography>} sx={{backgroundColor: "#fff0e1"}} />
-                    <Typography variant="body2" sx={{ fontWeight: "600", color: "#b9b8bd" }}>caused by weather in last 3 days</Typography>
-                    
-                </Box>
-                <Box
-                gap={2}
-                    sx={{
-                        width: "100%",
-                        backgroundSize: "cover",
-                        display: "flex",
-                        alignItems: "flex-end",
-                        justifyContent: "flex-start",
-                        marginTop: "2rem",
-                    }}>
-                        <Chip label={<Typography variant="body2" sx={{ fontWeight: "600", color: "#fff"}}>~10 min</Typography>} sx={{backgroundColor: "#4645d7"}} />
 
-                        <Typography variant="body2" sx={{ fontWeight: "600", color: "#b9b8bd" }}>estimated time if the most common delay occur</Typography>
+                    <Box
+                        sx={{
+                            width: "100%",
+                            backgroundSize: "cover",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}>
+                            <Typography variant="body2" sx={{ fontWeight: "600", color: "#bebdc0", textAlign: "left" }}>
+                                The airport has been ranked <span style={{ color: "#28AF5F", backgroundColor: "#e7fce9", padding: '0.3rem' }}> in the top {calculateRanking(statisticsData)}</span> among European airports
+                            </Typography>
+                    </Box>
+
+                    <Box
+                        sx={{
+                            width: "100%",
+                            backgroundSize: "cover",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}>
+                        <Typography variant="body2" component="span" sx={{ fontWeight: "600", color: "#bebdc0", textAlign: "right"}}>
+                            In the event of the most common delay, the estimated time is 
+                            <span  style={{ color: "#4645d7", backgroundColor: "#E4F1FF", padding: "0.3rem"}}>~{calculateDelayTime(statisticsData)} minutes</span>
+                        </Typography>
+                    </Box>
+                        
                 </Box>
             </Box>
         </Grid>
