@@ -36,10 +36,7 @@ const WeatherGrid = ({ recordChangeHandle }) => {
     const setPeriodFactorInfluence = (factorsObject) => {
         let periodInfluence = "LOW";
 
-        console.log(factorsObject);
-
         Object.values(factorsObject).map((factor) => {
-
 
             if (factor.influence_on_delay === "MEDIUM") {
                 periodInfluence = "MEDIUM";

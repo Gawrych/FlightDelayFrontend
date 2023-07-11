@@ -18,7 +18,7 @@ const NEXT_WEATHER_URL = "http://localhost:8080/api/v1/weather/periods?days=5";
 function NextDaysWeather() {
     const [items, setItems] = useState([]);
     const [nextDaysWeatherRecords, setNextDaysWeatherRecords] = useState(null);
-    const [nextDayWeatherAirportIcao, setNextDayWeatherAirportIcao] = useState("EPWA");
+    const [nextDayWeatherAirportIcao, setNextDayWeatherAirportIcao] = useState("");
     const [nextDayWeatherAirport, setNextDayWeatherAirport] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -27,8 +27,6 @@ function NextDaysWeather() {
     });
     
     const fetchNextDaysWeather = useCallback(async () => {
-        console.log(nextDayWeatherAirportIcao);
-
         let requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept-Language': 'en-EN' },
@@ -37,13 +35,17 @@ function NextDaysWeather() {
 
         const data = await fetch(NEXT_WEATHER_URL, requestOptions)
             .then(response => response.json());
-
-        console.log(data);
         
         setNextDaysWeatherRecords(data);
         setLoading(false);
-      }, [nextDayWeatherAirportIcao]);
+    }, [nextDayWeatherAirportIcao]);
 
+    useEffect(() => {
+        if (nextDayWeatherAirportIcao !== "") {
+            fetchNextDaysWeather();
+        }
+    }, [nextDayWeatherAirportIcao]);
+      
     useEffect(() => {
         const fetchAirports = async () => {
             const airportsNames = Airports.map((item) => item.name);
@@ -51,12 +53,8 @@ function NextDaysWeather() {
         };
 
         fetchAirports();
-        fetchNextDaysWeather();
+        setNextDayWeatherAirportIcao("EPWA");
     }, []);
-
-    useEffect(() => {
-        fetchNextDaysWeather();
-    }, [nextDayWeatherAirportIcao]);
 
     const getIcaoCode = (selectedValue) => {
         return Airports.find((item) => item.name === selectedValue).ident;

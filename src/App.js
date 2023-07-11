@@ -84,18 +84,11 @@ function App() {
                                     display: "flex",
                                     alignItems: "right",
                                     alignContent: "flex-end",
-                                    justifyContent: "space-between",
+                                    justifyContent: "flex-end",
                                     alignSelf: "right",
                                     color: "white",
                                     marginBottom: "1rem"}}>
 
-                                <Stack direction="row" sx={{
-                                    display: "flex",
-                                    alignItems: "flex-end"}}>
-                                    
-                                    <InfoOutlinedIcon sx={{ fontSize: 25 }} />
-                                    
-                                </Stack>
 
                                 <Stack sx={{
                                     display: "flex",
@@ -128,7 +121,7 @@ function App() {
                             marginBottom: "5rem",
                         }}>
                     
-                        <NextDaysWeather />
+                        {/* <NextDaysWeather /> */}
                     
                     </Box>
 
