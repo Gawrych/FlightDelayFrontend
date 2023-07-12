@@ -1,0 +1,23 @@
+.airportSelectorContainer {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.acceptButton {
+    background-color: #4645d8 !important;
+}
+
+.acceptButton:hover {
+    background-color: #ffffff !important;
+    color: #3c52b2 !important;
+}
+
+.airportAutocompleteGrid {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.airportAutocomplete {
+    width: 100%;
+}

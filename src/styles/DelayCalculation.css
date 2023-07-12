@@ -1,0 +1,50 @@
+.delayCalculationMainBox {
+    width: 100%;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    box-shadow: 1;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+.delayCardsGrid {
+    display: flex;
+    align-items: center;
+    margin-bottom: 7rem;
+    margin-top: 2rem;
+}
+
+.airplaneIcon {
+    font-size: 2.5rem !important;
+    color: #4645d8;
+}
+
+@media (max-width: 900px) {
+    .airplaneIcon {
+      transform: rotate(180deg);
+    }
+}
+  
+@media (min-width: 900px) {
+    .airplaneIcon {
+        transform: rotate(90deg);
+    }
+}
+
+.airportSectionGrid {
+    display: flex;
+    align-content: flex-start;
+}
+  
+.centeredItems {
+    display: flex;
+    align-items: center;
+}
+  
+.flightIcon {
+    margin-left: 0.5rem !important;
+    color: #4645d8 !important;
+}

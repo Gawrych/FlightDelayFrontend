@@ -1,5 +1,6 @@
 import { memo, useState, useEffect } from 'react';
 import {Grid} from "@mui/material";
+import "../styles/AirportSelector.css";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import Button from "@mui/material/Button";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
@@ -19,15 +20,14 @@ function AirportSelector ({options, setNewAirportForWeather, onAccept, defaultVa
     }, [value]);
 
     return (
-        <Grid item container xs={12} sm={12} md={5} lg={4} sx={{ alignItems: "center", display: 'flex', justifyContent: 'space-between'}}>
+        <Grid item container xs={12} sm={12} md={5} lg={4} className="airportSelectorContainer">
             <Grid item xs={3} sm={3} md={3} lg={3}>
-                <Button variant="contained" startIcon={<FlightTakeoffIcon />} onClick={onAccept} size="medium" 
-                sx={{ backgroundColor: "#4645d7", '&:hover': { backgroundColor: '#fff',color: '#3c52b2'}, }}></Button>
+                <Button className="acceptButton" variant="contained" startIcon={<FlightTakeoffIcon />} onClick={onAccept} size="medium"></Button>
             </Grid>
 
-            <Grid item xs={9} sm={9} md={9} lg={9} sx={{ display: 'flex', justifyContent: 'flex-end'}}>
+            <Grid item xs={9} sm={9} md={9} lg={9} className="airportAutocompleteGrid">
                 <Autocomplete
-                    sx={{ width: "100%" }}
+                    className="airportAutocomplete"
                     options={options}
                     inputValue={value}
                     onInputChange={(event, value) => setValue(value)}
@@ -41,25 +41,25 @@ function AirportSelector ({options, setNewAirportForWeather, onAccept, defaultVa
                         const parts = parse(option, matches);
 
                         return (
-                        <li {...props}>
-                            <div>
-                            {parts.map((part, index) => (
-                                <span
-                                key={index}
-                                style={{
-                                    fontWeight: part.highlight ? 700 : 400,
-                                }}
-                                >
-                                {part.text}
-                                </span>
-                            ))}
-                            </div>
-                        </li>
+                            <li {...props}>
+                                <div>
+                                    {parts.map((part, index) => (
+                                        <span
+                                            key={index}
+                                            style={{
+                                                fontWeight: part.highlight ? 700 : 400,
+                                            }}
+                                        >
+                                            {part.text}
+                                        </span>
+                                    ))}
+                                </div>
+                            </li>
                         );
                     }}
                 />
             </Grid>
-        </Grid>
+    </Grid>
     );
     
 };
