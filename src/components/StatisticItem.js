@@ -74,7 +74,7 @@ function createStatisticItemAverage (factor, index, short) {
     }
 
     return (
-        <Grid item xs={widthOnGrid} sm={6} md={6} lg={widthOnGrid}>
+        <Grid item xs={widthOnGrid} sm={6} md={6} lg={widthOnGrid} key={index} >
             <List sx={{
                 backgroundColor: "#E4F1FF",
                 padding: "0.3rem",
@@ -82,7 +82,7 @@ function createStatisticItemAverage (factor, index, short) {
                 borderBottomWidth: "1px",
                 borderBottomColor: "#2969EA",
                 borderBottomStyle: "solid",}}>
-                <ListItem key={index}>
+                <ListItem key={index+10}>
                     <ListItemAvatar>
                             <Avatar sx={{ backgroundColor: "#2969EA" }}>
                                 {icon}
@@ -114,7 +114,7 @@ function createStatisticItemTopValueWithDate (factor, index, short) {
     }
 
     return (
-        <Grid item xs={12} sm={6} md={6} lg={widthOnGrid}>
+        <Grid item xs={12} sm={6} md={6} lg={widthOnGrid} key={index} >
             <List sx={{
                 backgroundColor: "#E4F1FF",
                 padding: "0.3rem",
@@ -122,7 +122,7 @@ function createStatisticItemTopValueWithDate (factor, index, short) {
                 borderBottomWidth: "1px",
                 borderBottomColor: "#2969EA",
                 borderBottomStyle: "solid",}}>
-                <ListItem key={index}>
+                <ListItem key={index+20}>
                     <ListItemAvatar>
                             <Avatar sx={{ backgroundColor: "#2969EA" }}>
                                 {icon}
@@ -170,7 +170,7 @@ function createStatisticItemListOfValuesWithText (factor, index, short) {
     }
 
     return (
-        <Grid item xs={widthOnGrid} sm={6} md={6} lg={widthOnGrid}>
+        <Grid item xs={widthOnGrid} sm={6} md={6} lg={widthOnGrid} key={index}>
             <List sx={{
                 backgroundColor: "#E4F1FF",
                 padding: "0.3rem",
@@ -178,7 +178,7 @@ function createStatisticItemListOfValuesWithText (factor, index, short) {
                 borderBottomWidth: "1px",
                 borderBottomColor: "#2969EA",
                 borderBottomStyle: "solid",}}>
-                <ListItem key={index}>
+                <ListItem key={index+30}>
                     <ListItemAvatar>
                             <Avatar sx={{ backgroundColor: "#2969EA" }}>
                                 {icon}
@@ -193,7 +193,7 @@ function createStatisticItemListOfValuesWithText (factor, index, short) {
     );
 }
 
-function createStatisticItemWithNoData (factor, index, short) { 
+function createStatisticItemWithNoData (factor, index, short) {
     let name = factor.name;
     let icon = <WarningAmberIcon sx={{ color: "#fff" }} />;
 
@@ -203,9 +203,9 @@ function createStatisticItemWithNoData (factor, index, short) {
     }
 
     return (
-        <Grid item xs={12} sm={6} md={6} lg={widthOnGrid}>
+        <Grid item xs={12} sm={6} md={6} lg={widthOnGrid} key={index}>
             <List>
-                <ListItem key={index}>
+                <ListItem key={index+40}>
                     <ListItemIcon> {icon} </ListItemIcon>
                     <ListItemText primaryTypographyProps={{ color: "#bebdc0" }} secondaryTypographyProps={{ color: "#bebdc0"}} primary={name} secondary={"No data"} />
                 </ListItem>

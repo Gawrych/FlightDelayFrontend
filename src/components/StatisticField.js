@@ -29,11 +29,12 @@ const StatisticField = ({ phase, statisticsData, weatherData, airportName, nextD
     const airportType = phase + " airport";
 
     useEffect(() => {
-        console.log(nextDaysWeatherData);
-        if (nextDaysWeatherData !== null) {
-            console.log(nextDaysWeatherData);
+        if (nextDaysWeatherData.length !== 0) {
+
             const increaseByWeather = calculateForecastToDelayChance(nextDaysWeatherData);
-            if (increaseByWeather === 1) {
+            if (increaseByWeather === 0) {
+                setAirportChangeByWeather();
+            } else if (increaseByWeather === 1) {
                 setAirportChangeByWeather("will increase");
             } else if (increaseByWeather === 2) {
                 setAirportChangeByWeather("will increase significantly");

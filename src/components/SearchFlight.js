@@ -39,8 +39,6 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
 
     const filterOptions = createFilterOptions({
         limit: 100,
-        // TODO: Move the most popular Europe airports on to the top of the list
-        // TODO: Sort airports by region to filter out non-Europe airports
     });
 
     const check = (newDate, setDateFieldFunction) => {
@@ -55,6 +53,9 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        const todayDate = new Date();
+        todayDate.setDate(todayDate.getDate() + 16)
 
         if (arrivalAirport === "" || departureAirport === "") {
             setWarning(true);
@@ -77,6 +78,12 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
         if (departureDate > arrivalDate) {
             setWarning(true);
             setWarningText("Please select an arrival date that is after the departure date");
+            return;
+        }
+
+        if (new Date(departureDate) > todayDate || new Date(arrivalDate) > todayDate) {
+            setWarning(true);
+            setWarningText("Please select a dates that are within the next 15 days from today");
             return;
         }
 

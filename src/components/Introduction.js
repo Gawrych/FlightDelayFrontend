@@ -34,7 +34,7 @@ const Introduction = () => {
                         alignItems: "right",
                         alignContent: "center",
                         justifyContent: "center"}}>
-                    <Grid container xs={12} sm={12} md={12} lg={11} sx={{
+                    <Grid container item xs={12} sm={12} md={12} lg={11} sx={{
                                 textAlign: "center",
                                 display: "flex",
                                 alignItems: "right",
@@ -117,28 +117,28 @@ const Introduction = () => {
                                 justifyContent: "center",}}>
                                 <Grid item container xs={12} sm={12} md={12} lg={12} direction="row-reverse">
                             
-                                <Grid item container spacing={2} xs={12} sm={12} md={12} lg={12} sx={{
-                                    padding: "1rem",
-                                    fontWeight: "700",
-                                    textAlign: "right",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    alignContent: "flex-start",
-                                    justifyContent: "flex-end",}}>
-                                
-                                    <Grid item xs={12} sm={12} md={6} lg={10}>
-                                        
-                                        <Typography variant="h3">Airport statistic <br /> <LeaderboardIcon sx={{fontSize: 30}} /> data</Typography>
+                                    <Grid item container spacing={2} xs={12} sm={12} md={12} lg={12} sx={{
+                                        padding: "1rem",
+                                        fontWeight: "700",
+                                        textAlign: "right",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        alignContent: "flex-start",
+                                        justifyContent: "flex-end",}}>
                                     
-                                    </Grid>
-
-                                    <Grid item xs={12} sm={6} md={6} lg={10}>
+                                        <Grid item xs={12} sm={12} md={6} lg={10}>
+                                            
+                                            <Typography variant="h3">Airport statistic <br /> <LeaderboardIcon sx={{fontSize: 30}} /> data</Typography>
                                         
-                                        <Typography variant="h6">you can effortlessly check airport statistics and obtain the most important information needed to ensure punctuality and enables you to make more informed decisions about choice of airport.</Typography>
+                                        </Grid>
+
+                                        <Grid item xs={12} sm={6} md={6} lg={10}>
+                                            
+                                            <Typography variant="h6">you can effortlessly check airport statistics and obtain the most important information needed to ensure punctuality and enables you to make more informed decisions about choice of airport.</Typography>
+
+                                        </Grid>
 
                                     </Grid>
-
-                                </Grid>
 
                                 </Grid>
                             </Stack>

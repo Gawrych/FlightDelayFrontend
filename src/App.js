@@ -6,7 +6,6 @@ import DelayCalculation from "./components/DelayCalculation";
 import {Box, Link, CssBaseline, Typography, Container, Stack} from "@mui/material";
 import Introduction from "./components/Introduction";
 import SwitchAccessShortcutIcon from '@mui/icons-material/SwitchAccessShortcut';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import DetailFooter from "./components/DetailFooter";
 
@@ -121,7 +120,7 @@ function App() {
                             marginBottom: "5rem",
                         }}>
                     
-                        {/* <NextDaysWeather /> */}
+                        <NextDaysWeather />
                     
                     </Box>
 

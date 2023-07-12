@@ -1,6 +1,7 @@
 import React, { useState, useEffect, memo } from "react";
 import {
     Grid,
+    Box,
 } from "@mui/material";
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -129,7 +130,8 @@ const WeatherGrid = ({ recordChangeHandle }) => {
                     {parseDate(record.to_time)}
                 </Typography>
 
-                <Typography sx={{ width: '50%', color: "#000" }}>
+                <Box sx={{width: '50%', color: "#000",}}>
+
                     <Chip
                         label={finalInfluence}
                         sx={{
@@ -137,7 +139,8 @@ const WeatherGrid = ({ recordChangeHandle }) => {
                             backgroundColor: setDarkColor(finalInfluence),
                         }}
                     />
-                </Typography>
+                </Box>
+
             </AccordionSummary>
         );
     }
@@ -154,7 +157,7 @@ const WeatherGrid = ({ recordChangeHandle }) => {
             alignItems="top">
 
             {records.map((record, index) => (
-                <Grid item xs={12} sm={12} md={6} lg={6} >
+                <Grid item xs={12} sm={12} md={6} lg={6} key={index}>
                     <Accordion sx={{ borderWidth: "2" }}>
                         
                         {createSummaryRow(record)}
@@ -166,11 +169,11 @@ const WeatherGrid = ({ recordChangeHandle }) => {
 
                             <Grid item container spacing={4}>
 
-                                <WeatherItem factor={record.factors.VISIBILITY} index={index} icon={<VisibilityIcon sx={{ color: "#fff" }}/>} />
-                                <WeatherItem factor={record.factors.CROSSWIND} index={index} icon={<AirIcon sx={{ color: "#fff" }}/>} />
-                                <WeatherItem factor={record.factors.TAILWIND} index={index} icon={<AirIcon sx={{ color: "#fff" }}/>} />
-                                <WeatherItem factor={record.factors.CLOUDBASE} index={index} icon={<CloudIcon sx={{ color: "#fff" }}/>} />
-                                <WeatherItem factor={record.factors.RAIN} index={index} icon={<WaterDropIcon sx={{ color: "#fff" }}/>} />
+                                <WeatherItem factor={record.factors.VISIBILITY} index={1} icon={<VisibilityIcon sx={{ color: "#fff" }}/>} />
+                                <WeatherItem factor={record.factors.CROSSWIND} index={2} icon={<AirIcon sx={{ color: "#fff" }}/>} />
+                                <WeatherItem factor={record.factors.TAILWIND} index={3} icon={<AirIcon sx={{ color: "#fff" }}/>} />
+                                <WeatherItem factor={record.factors.CLOUDBASE} index={4} icon={<CloudIcon sx={{ color: "#fff" }}/>} />
+                                <WeatherItem factor={record.factors.RAIN} index={5} icon={<WaterDropIcon sx={{ color: "#fff" }}/>} />
 
                             </Grid>
 

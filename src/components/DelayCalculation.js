@@ -1,11 +1,10 @@
-import React, { useState, useEffect, moment, now, then } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Box,
     Container,
     CssBaseline,
     Grid,
     Typography,
-    Stack,
 } from "@mui/material";
 
 import CloudIcon from '@mui/icons-material/Cloud';
@@ -20,7 +19,6 @@ import StatisticField from "./StatisticField";
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 import Airports from "../static/json/Airports.json";
 
-
 const WEATHER_URL = "http://localhost:8080/api/v1/weather/hour";
 const STATISTICS_URL = "http://localhost:8080/api/v1/statistics/";
 const NEXT_WEATHER_URL = "http://localhost:8080/api/v1/weather/periods?days=5";
@@ -33,10 +31,7 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
     const [departureWeatherData, setDepartureWeatherData] = useState([]);
     const [departureNextDaysWeatherData, setDepartureNextDaysWeatherData] = useState([]);
     const [departureStatisticsData, setDepartureStatisticsData] = useState([]);
-
-    const getIcaoCode = (selectedValue) => {
-        return Airports.find((item) => item.name === selectedValue).ident;
-    };
+    const [errorHandler, setErrorHandler] = useState("");
 
     const fetchWeather = async (airport, date, phase, variableRef) => {
 
@@ -46,9 +41,17 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
             body: JSON.stringify({ airportIdent: getIcaoCode(airport), date: date, phase: phase })
         };
 
-        const data = await fetch(WEATHER_URL, requestOptions).then(response => response.json());
+        const response = await fetch(WEATHER_URL, requestOptions);
+        const data = await response.json();
 
-        variableRef([data]);
+        if (response.status === 200) {
+            setErrorHandler();
+            variableRef([data]);
+
+        } else {
+            variableRef([]);
+            setErrorHandler(data.message);
+        }
     };
 
     const fetchStatistics = async (airport, variableRef) => {
@@ -58,9 +61,17 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
             headers: { 'Content-Type': 'application/json', 'Accept-Language': 'en-EN' },
         };
 
-        const data = await fetch(STATISTICS_URL + getIcaoCode(airport), requestOptions).then(response => response.json());
+        const response = await fetch(STATISTICS_URL + getIcaoCode(airport), requestOptions);
+        const data = await response.json();
 
-        variableRef([data]);
+        if (response.status === 200) {
+            setErrorHandler();
+            variableRef([data]);
+
+        } else {
+            variableRef([]);
+            setErrorHandler(data.message);
+        }
     };
     
     const fetchNextDaysWeather = async (airport, variableRef) => {
@@ -71,11 +82,22 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
             body: JSON.stringify({ airportIdent: getIcaoCode(airport), phase: "ARRIVAL" })
         };
 
-        const data = await fetch(NEXT_WEATHER_URL, requestOptions).then(response => response.json());
+        const response = await fetch(NEXT_WEATHER_URL, requestOptions);
+        const data = await response.json();
 
-        variableRef([data]);
+        if (response.status === 200) {
+            setErrorHandler();
+            variableRef([data]);
+            
+        } else {
+            variableRef([]);
+            setErrorHandler(data.message);
+        }
     };
 
+    const getIcaoCode = (selectedValue) => {
+        return Airports.find((item) => item.name === selectedValue).ident;
+    };
 
     const getArrivalData = () => {
         fetchWeather(flightData.arrivalAirport, flightData.arrivalDate, "ARRIVAL", setArrivalWeatherData);
@@ -108,12 +130,31 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
         }
     }, [flightData]);
 
-    if (arrivalWeatherData.length === 0 || arrivalStatisticsData.length === 0 || departureWeatherData.length === 0 || departureStatisticsData.length === 0) {
-        return;
-    }
-
     return (
         <>
+        {errorHandler && 
+        <Box
+            sx={{
+                width: "100%",
+                backgroundSize: "cover",
+                display: "flex",
+                textAlign: "center",
+                alignItems: "center",
+                justifyContent: "center",
+                paddingTop: "5rem",
+                paddingBottom: "5rem",
+            }}>
+                <Grid container>
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <Typography variant="h3" sx={{ fontWeight: "600", color: "#4645d8" }}>I am sorry!</Typography>
+                        <Typography variant="h6">My calculation encountered a failure.</Typography>
+                        <Typography variant="body2">{errorHandler}</Typography>
+                    </Grid>
+                </Grid>
+        </Box>
+
+        }
+        {arrivalWeatherData.length !== 0 && arrivalStatisticsData.length !== 0 && departureWeatherData.length !== 0 && departureStatisticsData.length !== 0 &&
             <Box
                 sx={{
                     width: "100%",
@@ -140,66 +181,50 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
                             <Grid item container xs={12} sm={12} md={6} lg={6} spacing={3} sx={{
                                         display: "flex", alignContent: "flex-start"}}>
                                 <Grid item container xs={12} sm={12} md={12} lg={12}>
-                                    <Typography variant="h6" sx={{ display: "flex", alignItems: "center"}}>Departure airport <FlightTakeoffIcon sx={{ marginLeft: "0.5rem", color: "#4645d8" }} /></Typography>
+                                    <Typography variant="h6" sx={{ display: "flex", alignItems: "center"}}>{flightData.departureAirport}<FlightTakeoffIcon sx={{ marginLeft: "0.5rem", color: "#4645d8" }} /></Typography>
                                 </Grid>
                                 
                                 <Grid item container xs={12} sm={12} md={12} lg={12} spacing={3}
                                     sx={{ display: "flex", alignItems: "center"}}>
 
+                                    <StatisticItem factor={departureStatisticsData[0].TOP_MONTH_OF_TRAFFIC} index={1} />
+                                    <StatisticItem factor={departureStatisticsData[0].AVERAGE_PRE_DEPARTURE_DELAY} index={2} />
+                                    <StatisticItem factor={departureStatisticsData[0].TOP_MONTH_DELAY_IN_TAXI_OUT} index={3}  />
+                                    <StatisticItem factor={departureStatisticsData[0].AVERAGE_DELAY_IN_TAXI_OUT} index={4}  />
+                                    <StatisticItem factor={departureStatisticsData[0].MOST_COMMON_DELAY_CAUSE} index={5}  />
+                                    <StatisticItem factor={departureStatisticsData[0].AVERAGE_MONTHLY_TRAFFIC} index={6} short={true}/>
+                            
 
-                                    {departureStatisticsData.map((record) => (
-                                        <>
-                                            <StatisticItem factor={record.TOP_MONTH_OF_TRAFFIC} index={1} />
-                                            <StatisticItem factor={record.AVERAGE_PRE_DEPARTURE_DELAY} index={2} />
-                                            <StatisticItem factor={record.TOP_MONTH_DELAY_IN_TAXI_OUT} index={3} />
-                                            <StatisticItem factor={record.AVERAGE_DELAY_IN_TAXI_OUT} index={4} />
-                                            <StatisticItem factor={record.MOST_COMMON_DELAY_CAUSE} index={5} />
-                                            <StatisticItem factor={record.AVERAGE_MONTHLY_TRAFFIC} index={6} short={true}/>
-                                        </>
-                                    ))}
-
-                                    {departureWeatherData.map((record) => (
-                                        <>
-                                            <WeatherItem factor={record.VISIBILITY} index={1} icon={<VisibilityIcon sx={{ color: "#fff" }}/>} />
-                                            <WeatherItem factor={record.CROSSWIND} index={2} icon={<AirIcon sx={{ color: "#fff" }}/>} />
-                                            <WeatherItem factor={record.TAILWIND} index={3} icon={<AirIcon sx={{ color: "#fff" }}/>} />
-                                            <WeatherItem factor={record.CLOUDBASE} index={4} icon={<CloudIcon sx={{ color: "#fff" }}/>} />
-                                            <WeatherItem factor={record.RAIN} index={5} icon={<WaterDropIcon sx={{ color: "#fff" }}/>} />
-                                        </>
-                                    ))}
+                                    <WeatherItem factor={departureWeatherData[0].VISIBILITY} index={1} icon={<VisibilityIcon sx={{ color: "#fff" }}/>} />
+                                    <WeatherItem factor={departureWeatherData[0].CROSSWIND} index={2} icon={<AirIcon sx={{ color: "#fff" }}/>} />
+                                    <WeatherItem factor={departureWeatherData[0].TAILWIND} index={3} icon={<AirIcon sx={{ color: "#fff" }}/>} />
+                                    <WeatherItem factor={departureWeatherData[0].CLOUDBASE} index={4} icon={<CloudIcon sx={{ color: "#fff" }}/>} />
+                                    <WeatherItem factor={departureWeatherData[0].RAIN} index={5} icon={<WaterDropIcon sx={{ color: "#fff" }}/>} />
+                                   
                                 </Grid>
                             </Grid>
 
-                            <Grid item container xs={12} sm={12} md={6} lg={6} spacing={3} sx={{ 
+                            <Grid item container xs={12} sm={12} md={6} lg={6} spacing={3} sx={{
                                         display: "flex", alignContent: "flex-start"}}>
                                 <Grid item container xs={12} sm={12} md={12} lg={12}>
-                                    <Typography variant="h6" sx={{ display: "flex", alignItems: "center"}}>Arrival airport <FlightLandIcon sx={{ marginLeft: "0.5rem", color: "#4645d8" }} /></Typography>
+                                    <Typography variant="h6" sx={{ display: "flex", alignItems: "center"}}>{flightData.arrivalAirport}<FlightLandIcon sx={{ marginLeft: "0.5rem", color: "#4645d8" }} /></Typography>
                                 </Grid>
                                 
-                                <Grid item container xs={12} sm={12} md={12} lg={12} spacing={3} 
+                                <Grid item container xs={12} sm={12} md={12} lg={12} spacing={3}
                                     sx={{ display: "flex", alignItems: "center"}}>
 
-                                    {arrivalStatisticsData.map((record, index) => (
-                                        <>
-                                            <StatisticItem factor={record.TOP_MONTH_OF_TRAFFIC} index={1} />
-                                            <StatisticItem factor={record.AVERAGE_DELAY_IN_TAXI_IN_AND_ASMA} index={2} />
-                                            <StatisticItem factor={record.MOST_COMMON_DELAY_CAUSE} index={3} />
-                                            <StatisticItem factor={record.TOP_MONTH_DELAY_IN_TAXI_IN_AND_ASMA} index={4} />
-                                            <StatisticItem factor={record.AVERAGE_TIME_TO_PARTICULAR_DELAY_CAUSE} index={5} />
-                                            <StatisticItem factor={record.AVERAGE_MONTHLY_TRAFFIC} index={6} short={true}/>
-                                        </>
-                                    ))}
+                                    <StatisticItem factor={arrivalStatisticsData[0].TOP_MONTH_OF_TRAFFIC} index={1} />
+                                    <StatisticItem factor={arrivalStatisticsData[0].AVERAGE_DELAY_IN_TAXI_IN_AND_ASMA} index={2} />
+                                    <StatisticItem factor={arrivalStatisticsData[0].MOST_COMMON_DELAY_CAUSE} index={3} />
+                                    <StatisticItem factor={arrivalStatisticsData[0].TOP_MONTH_DELAY_IN_TAXI_IN_AND_ASMA} index={4} />
+                                    <StatisticItem factor={arrivalStatisticsData[0].AVERAGE_TIME_TO_PARTICULAR_DELAY_CAUSE} index={5}/>
+                                    <StatisticItem factor={arrivalStatisticsData[0].AVERAGE_MONTHLY_TRAFFIC} index={6} short={true}/>
 
-                                                                        
-                                    {arrivalWeatherData.map((record) => (
-                                        <>
-                                            <WeatherItem factor={record.VISIBILITY} index={1} icon={<VisibilityIcon sx={{ color: "#fff" }}/>} />
-                                            <WeatherItem factor={record.CROSSWIND} index={2} icon={<AirIcon sx={{ color: "#fff" }}/>} />
-                                            <WeatherItem factor={record.TAILWIND} index={3} icon={<AirIcon sx={{ color: "#fff" }}/>} />
-                                            <WeatherItem factor={record.CLOUDBASE} index={4} icon={<CloudIcon sx={{ color: "#fff" }}/>} />
-                                            <WeatherItem factor={record.RAIN} index={5} icon={<WaterDropIcon sx={{ color: "#fff" }}/>} />
-                                        </>
-                                    ))}
+                                    <WeatherItem factor={arrivalWeatherData[0].VISIBILITY} index={1} icon={<VisibilityIcon sx={{ color: "#fff" }}/>} />
+                                    <WeatherItem factor={arrivalWeatherData[0].CROSSWIND} index={2} icon={<AirIcon sx={{ color: "#fff" }}/>}/>
+                                    <WeatherItem factor={arrivalWeatherData[0].TAILWIND} index={3} icon={<AirIcon sx={{ color: "#fff" }}/>} />
+                                    <WeatherItem factor={arrivalWeatherData[0].CLOUDBASE} index={4} icon={<CloudIcon sx={{ color: "#fff" }}/>} />
+                                    <WeatherItem factor={arrivalWeatherData[0].RAIN} index={5} icon={<WaterDropIcon sx={{ color: "#fff" }}/>} />
 
                                 </Grid>
                             </Grid>
@@ -207,6 +232,7 @@ const DelayCalculation = ({ flightData, fetchComplete }) => {
                     </Container>
                 </CssBaseline>
             </Box>
+            }
         </>
     );
 };

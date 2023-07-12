@@ -21,6 +21,8 @@ function NextDaysWeather() {
     const [nextDayWeatherAirportIcao, setNextDayWeatherAirportIcao] = useState("");
     const [nextDayWeatherAirport, setNextDayWeatherAirport] = useState("");
     const [loading, setLoading] = useState(false);
+    const [errorHandler, setErrorHandler] = useState("");
+
 
     const setNewAirportForWeather = useCallback(val => {
         setNextDayWeatherAirport(val);
@@ -33,10 +35,18 @@ function NextDaysWeather() {
             body: JSON.stringify({ airportIdent: nextDayWeatherAirportIcao, phase: "ARRIVAL" })
         };
 
-        const data = await fetch(NEXT_WEATHER_URL, requestOptions)
-            .then(response => response.json());
-        
-        setNextDaysWeatherRecords(data);
+        const response = await fetch(NEXT_WEATHER_URL, requestOptions);
+        const data = await response.json();
+
+        if (response.status === 200) {
+            setErrorHandler();
+            setNextDaysWeatherRecords(data);
+            
+        } else {
+            setNextDaysWeatherRecords();
+            setErrorHandler(data.message);
+        }
+
         setLoading(false);
     }, [nextDayWeatherAirportIcao]);
 
@@ -89,40 +99,60 @@ function NextDaysWeather() {
         }
     });
 
-    if (!nextDaysWeatherRecords) {
-        return;
-    }
-
     return (
         <>
-            <Container maxWidth="lg">
-
-                <Box sx={{ width: '100%' }}>
-                    {loading && <LinearProgress />}
-                </Box>
-
-                <Stack direction="column" gap={2} sx={{ display: "flex", flex: "1" }}>
-                    <Box>
-                        <Grid container justifyContent="center" sx={{ display: 'flex', alignItems: 'center' }}>
-
-                            <Grid item container xs={12} sm={12} md={7} lg={8} sx={{ paddingTop: "2rem", paddingBottom: "2rem" }}>
-                                <Stack direction="row" alignItems="center" gap={1}>
-                                    <Typography variant="h5">Airport weather forecast</Typography>
-                                    <CloudQueueIcon sx={{color: "#4645d8" }}/>
-                                </Stack>
+            {errorHandler &&
+                <Box
+                    sx={{
+                        width: "100%",
+                        backgroundSize: "cover",
+                        display: "flex",
+                        textAlign: "center",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        paddingTop: "5rem",
+                        paddingBottom: "5rem",
+                    }}>
+                        <Grid container>
+                            <Grid item xs={12} sm={12} md={12} lg={12}>
+                                <Typography variant="h3" sx={{ fontWeight: "600", color: "#4645d8" }}>I am sorry!</Typography>
+                                <Typography variant="h6">My calculation encountered a failure.</Typography>
+                                <Typography variant="body2">{errorHandler}</Typography>
                             </Grid>
-
-                            <AirportSelector options={items} setNewAirportForWeather={setNewAirportForWeather} onAccept={sendForNewData} defaultValue={items[0]} />
-
                         </Grid>
+                </Box>
+            }
+
+            {nextDaysWeatherRecords &&
+                <Container maxWidth="lg">
+
+                    <Box sx={{ width: '100%' }}>
+                        {loading && <LinearProgress />}
                     </Box>
-                    <Box key={"weatherForecast"}>
-                        <ThemeProvider theme={theme}>
-                            <WeatherGrid recordChangeHandle={recordChangeHandle} />
-                        </ThemeProvider>
-                    </Box>
-                </Stack>
-            </Container>
+
+                    <Stack direction="column" gap={2} sx={{ display: "flex", flex: "1" }}>
+                        <Box>
+                            <Grid container justifyContent="center" sx={{ display: 'flex', alignItems: 'center' }}>
+
+                                <Grid item container xs={12} sm={12} md={7} lg={8} sx={{ paddingTop: "2rem", paddingBottom: "2rem" }}>
+                                    <Stack direction="row" alignItems="center" gap={1}>
+                                        <Typography variant="h5">Airport weather forecast</Typography>
+                                        <CloudQueueIcon sx={{color: "#4645d8" }}/>
+                                    </Stack>
+                                </Grid>
+
+                                <AirportSelector options={items} setNewAirportForWeather={setNewAirportForWeather} onAccept={sendForNewData} defaultValue={items[0]} />
+
+                            </Grid>
+                        </Box>
+                        <Box>
+                            <ThemeProvider theme={theme}>
+                                <WeatherGrid recordChangeHandle={recordChangeHandle} />
+                            </ThemeProvider>
+                        </Box>
+                    </Stack>
+                </Container>
+            }
         </>
     );
 }
