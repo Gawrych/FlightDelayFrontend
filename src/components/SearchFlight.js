@@ -141,7 +141,12 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
                                                 }}
                                                 onChange={(date) => check(date, setDepartureDate)}
                                                 disablePast={true}
-                                                sx={{ width: "100%" }}
+                                                sx={{ 
+                                                    width: "100%",
+                                                    borderRadius: "0.3rem",
+                                                    borderBottomWidth: "1.5px",
+                                                    borderBottomColor: "#2969EA",
+                                                    borderBottomStyle: "solid", }}
                                                 label="Departure date"
                                             />
                                         </DemoContainer>
@@ -153,7 +158,9 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
 
                                     <Autocomplete
                                         id="highlights-demo"
-                                        sx={{ width: "100%" }}
+                                        sx={{ 
+                                            width: "100%",
+                                             }}
                                         options={items}
                                         inputValue={departureAirport}
                                         onInputChange={(event, value) =>
@@ -165,6 +172,11 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
                                                 {...params}
                                                 label="Departure airport"
                                                 margin="normal"
+                                                sx={{
+                                                    borderRadius: "0.3rem",
+                                                    borderBottomWidth: "1.5px",
+                                                    borderBottomColor: "#2969EA",
+                                                    borderBottomStyle: "solid", }}
                                             />
                                         )}
                                         renderOption={(
@@ -188,9 +200,7 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
                                                             <span
                                                                 key={index}
                                                                 style={{
-                                                                    fontWeight: part.highlight
-                                                                        ? 700
-                                                                        : 400,
+                                                                    fontWeight: part.highlight? 700 : 400,
                                                                 }}
                                                             >
                         {part.text}
@@ -216,7 +226,12 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
                                                 }}
                                                 onChange={(date) => check(date, setArrivalDate)}
                                                 disablePast={true}
-                                                sx={{ width: "100%" }}
+                                                sx={{ 
+                                                    width: "100%",
+                                                    borderRadius: "0.3rem",
+                                                    borderBottomWidth: "1.5px",
+                                                    borderBottomColor: "#2969EA",
+                                                    borderBottomStyle: "solid", }}
                                                 label="Arrival date"
                                             />
                                         </DemoContainer>
@@ -240,6 +255,11 @@ const SearchFlight = ({ onFlightData, loadingStatus}) => {
                                                 {...params}
                                                 label="Arrival airport"
                                                 margin="normal"
+                                                sx={{
+                                                    borderRadius: "0.3rem",
+                                                    borderBottomWidth: "1.5px",
+                                                    borderBottomColor: "#2969EA",
+                                                    borderBottomStyle: "solid", }}
                                             />
                                         )}
                                         renderOption={(

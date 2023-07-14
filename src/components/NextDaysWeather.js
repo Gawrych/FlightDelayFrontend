@@ -13,7 +13,10 @@ import AirportSelector from "./AirportSelector";
 import WeatherGrid from "./WeatherGrid";
 import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 
-const NEXT_WEATHER_URL = "https://flightdelay-2a258086bffe.herokuapp.com/api/v1/weather/periods?days=5";
+const herokuHost = 'https://flightdelay-2a258086bffe.herokuapp.com/'
+const localhost = 'http://localhost:8080/'
+
+const NEXT_WEATHER_URL = herokuHost + "api/v1/weather/periods?days=5";
 
 function NextDaysWeather() {
     const [items, setItems] = useState([]);

@@ -19,9 +19,12 @@ import DelayCard from "./DelayCard";
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 import Airports from "../static/json/Airports.json";
 
-const WEATHER_URL = "https://flightdelay-2a258086bffe.herokuapp.com/api/v1/weather/hour";
-const STATISTICS_URL = "https://flightdelay-2a258086bffe.herokuapp.com/api/v1/statistics/";
-const NEXT_WEATHER_URL = "https://flightdelay-2a258086bffe.herokuapp.com/api/v1/weather/periods?days=5";
+const herokuHost = 'https://flightdelay-2a258086bffe.herokuapp.com/'
+const localhost = 'http://localhost:8080/'
+
+const WEATHER_URL = herokuHost + "api/v1/weather/hour";
+const STATISTICS_URL = herokuHost + "api/v1/statistics/";
+const NEXT_WEATHER_URL = herokuHost + "api/v1/weather/periods?days=5";
 
 const DelayCalculation = ({ flightData, fetchComplete }) => {
 

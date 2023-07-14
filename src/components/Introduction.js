@@ -33,8 +33,10 @@ const Introduction = () => {
                         display: "flex",
                         alignItems: "right",
                         alignContent: "center",
-                        justifyContent: "center"}}>
+                        justifyContent: "center",
+                        marginBottom: {xs: "6rem", md: "2rem"},}}>
                     <Grid container item xs={12} sm={12} md={12} lg={11} sx={{
+                                gap: {xs: 10, lg: 0},
                                 textAlign: "center",
                                 display: "flex",
                                 alignItems: "right",
@@ -43,10 +45,10 @@ const Introduction = () => {
 
                         <Grid item container xs={12} sm={12} md={12} lg={4}>
                             <Stack direction="column" gap={2} sx={{
-                                padding: "1rem",
+                                padding: {xs: "0rem", md: "1rem"},
                                 fontWeight: "700",}}>
                                 <Grid item container spacing={2} xs={12} sm={12} md={12} lg={12} sx={{
-                                    padding: "1rem",
+                                    padding: {xs: "0rem", md: "1rem"},
                                     fontWeight: "700",
                                     textAlign: "left",
                                     display: "flex",
@@ -72,7 +74,7 @@ const Introduction = () => {
 
                         <Grid item container xs={12} sm={12} md={12} lg={4}>
                             <Stack direction="column" gap={2} sx={{
-                                padding: "1rem",
+                                padding: {xs: "0rem", md: "1rem"},
                                 fontWeight: "700",
                                 textAlign: "center",
                                 display: "flex",
@@ -81,7 +83,7 @@ const Introduction = () => {
                                 justifyContent: "center",}}>
                                         
                                 <Grid item container spacing={2} xs={12} sm={12} md={12} lg={12} sx={{
-                                    padding: "1rem",
+                                    padding: {xs: "0rem", md: "1rem"},
                                     fontWeight: "700",
                                     textAlign: "center",
                                     display: "flex",
@@ -108,7 +110,7 @@ const Introduction = () => {
 
                         <Grid item container xs={12} sm={12} md={12} lg={4} >
                             <Stack direction="column" gap={2} sx={{
-                                padding: "1rem",
+                                padding: {xs: "0rem", md: "1rem"},
                                 fontWeight: "700",
                                 textAlign: "center",
                                 display: "flex",
@@ -118,7 +120,7 @@ const Introduction = () => {
                                 <Grid item container xs={12} sm={12} md={12} lg={12} direction="row-reverse">
                             
                                     <Grid item container spacing={2} xs={12} sm={12} md={12} lg={12} sx={{
-                                        padding: "1rem",
+                                        padding: {xs: "0rem", md: "1rem"},
                                         fontWeight: "700",
                                         textAlign: "right",
                                         display: "flex",

@@ -51,7 +51,7 @@ const WeatherItem = ({ factor, index, icon, longGrid }) => {
     const darkColor = setDarkColor(factor.influence_on_delay);
 
     return (
-        <Grid item xs={6} sm={6} md={6} lg={widthOnGrid} key={index+10}>
+        <Grid item xs={12} sm={6} md={6} lg={widthOnGrid} key={index+10}>
             <List sx={{
                     backgroundColor: setColor(factor.influence_on_delay),
                     padding: "0.3rem",

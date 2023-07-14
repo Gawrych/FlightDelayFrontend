@@ -74,7 +74,7 @@ function createStatisticItemAverage (factor, index, short) {
     }
 
     return (
-        <Grid item xs={widthOnGrid} sm={6} md={6} lg={widthOnGrid} key={index} >
+        <Grid item xs={12} sm={6} md={6} lg={widthOnGrid} key={index} >
             <List sx={{
                 backgroundColor: "#E4F1FF",
                 padding: "0.3rem",
@@ -170,7 +170,7 @@ function createStatisticItemListOfValuesWithText (factor, index, short) {
     }
 
     return (
-        <Grid item xs={widthOnGrid} sm={6} md={6} lg={widthOnGrid} key={index}>
+        <Grid item xs={12} sm={6} md={6} lg={widthOnGrid} key={index}>
             <List sx={{
                 backgroundColor: "#E4F1FF",
                 padding: "0.3rem",

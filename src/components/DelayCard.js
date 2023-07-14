@@ -84,7 +84,7 @@ const StatisticField = ({ phase, statisticsData, weatherData, airportName, nextD
 
                     <Box className="centeredItemsContent">
                         <Typography variant="body2" component="span" className="greyText" align="right">
-                            In the event of the most common delay, the estimated time is 
+                            In the event of the most common delay, the estimated time is&nbsp;
                             <span  className="blueAccent">~{calculateDelayTime(statisticsData)} minutes</span>
                         </Typography>
                     </Box>
