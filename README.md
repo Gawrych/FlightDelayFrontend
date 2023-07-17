@@ -18,10 +18,16 @@ Additionally, my website allows you to check the weather conditions for your cho
 * Check summary airport statistics from the last year
 * Assist in choosing an airport
 
-## Technologies Used
-
-* React
-* Material-UI
+## Tech Stack
+* **Frontend**
+  * JavaScript
+  * React
+  * Material-UI
+  * HTML/CSS
+* **Data**
+  * JSON
+* **Deployment**
+  * Home.pl
 
 ## Acknowledgements
 I would like to express my sincere appreciation to 
