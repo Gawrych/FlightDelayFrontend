@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# Flight Delay Calculator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project provides a user-friendly interface allows users to interact with my other project [Flight Delay Calculator API](https://github.com/Gawrych/FlightDelay), which calculates the probability of flight delay based on factors such as historical airport statistics, weather conditions, and current traffic levels at European airports.
 
-## Available Scripts
+## How to use
 
-In the project directory, you can run:
+To check the likelihood of flight delay, simply visit my web application [DelayFlight.pl](https://www.delayflight.pl) and enter the airport, date, and time of your flight. The application will calculate the probability of delay and provide a detailed summary of the contributing factors. This empowers you to make more informed decisions when planning your travel.
 
-### `npm start`
+Additionally, my website allows you to check the weather conditions for your chosen airport for the upcoming five days. This information can help you assess whether the conditions are favorable for planning a flight during that time.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![Example of use on image](https://github.com/Gawrych/FlightDelayFrontend/assets/71496578/775c7982-0d6f-457f-b34d-586b957a7d4d)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+* Check the probability of flight delays for a chosen airport and time
+* Check the forecasted conditions to determine if they fall within the limits for a timely arrival
+* Check the estimated time in the event of a delay
+* Check summary airport statistics from the last year
+* Assist in choosing an airport
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies Used
 
-### `npm run build`
+* React
+* Material-UI
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Acknowledgements
+I would like to express my sincere appreciation to 
+* [Eurocontrol](https://www.eurocontrol.int) - for providing statistical data
+* [OurAirports](https://www.ourairports.com) - for providing airports data
+* [OpenMeteo](www.open-meteo.com) - for providing weather api
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Bibliography
+* [Boeing 737 Limitations](http://www.b737.org.uk/limitations.htm)
+* [Weather phenomena affecting air traffic management operations](https://ansperformance.eu/library/ATXIT_indicator_documentation_mar23.pdf)
+* [Exceeding Tire SpeedRating During Takeoff](https://www.boeing.com/commercial/aeromagazine/articles/qtr_02_09/pdfs/AERO_Q209_article04.pdf)
+* [ATC Pre-departure Delay](https://ansperformance.eu/definition/atc-pre-departure-delay/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Contact
 
-### `npm run eject`
+Paweł Gawrych - [LinkedIn](www.linkedin.com/in/Gawrych)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Email - pawelgawrych203@gmail.com
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Web Application - [DelayFlight.pl](https://www.delayflight.pl/)
