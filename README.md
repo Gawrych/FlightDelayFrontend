@@ -32,17 +32,16 @@ Additionally, my website allows you to check the weather conditions for your cho
 ## Acknowledgements
 I would like to express my sincere appreciation to 
 * [Eurocontrol](https://www.eurocontrol.int) - for providing statistical data
-* [OurAirports](https://www.ourairports.com) - for providing airports data
+* [OurAirports](https://www.ourairports.com) - for providing static airports data
 * [OpenMeteo](www.open-meteo.com) - for providing weather api
 
 ## Bibliography
 * [Boeing 737 Limitations](http://www.b737.org.uk/limitations.htm)
+* [Airbus 320 Limitations](https://wiki.ivao.aero/en/home/training/mediawiki/pending/Airbus_320_Limitations)
 * [Weather phenomena affecting air traffic management operations](https://ansperformance.eu/library/ATXIT_indicator_documentation_mar23.pdf)
-* [Exceeding Tire SpeedRating During Takeoff](https://www.boeing.com/commercial/aeromagazine/articles/qtr_02_09/pdfs/AERO_Q209_article04.pdf)
 * [ATC Pre-departure Delay](https://ansperformance.eu/definition/atc-pre-departure-delay/)
 
 ## Contact
-
 Paweł Gawrych - [LinkedIn](www.linkedin.com/in/Gawrych)
 
 Email - pawelgawrych203@gmail.com
