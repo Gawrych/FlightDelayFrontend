@@ -33,7 +33,7 @@ Additionally, my website allows you to check the weather conditions for your cho
 I would like to express my sincere appreciation to 
 * [Eurocontrol](https://www.eurocontrol.int) - for providing statistical data
 * [OurAirports](https://www.ourairports.com) - for providing static airports data
-* [OpenMeteo](www.open-meteo.com) - for providing weather api
+* [OpenMeteo](https://www.open-meteo.com) - for providing weather api
 
 ## Bibliography
 * [Boeing 737 Limitations](http://www.b737.org.uk/limitations.htm)
@@ -42,7 +42,7 @@ I would like to express my sincere appreciation to
 * [ATC Pre-departure Delay](https://ansperformance.eu/definition/atc-pre-departure-delay/)
 
 ## Contact
-Paweł Gawrych - [LinkedIn](www.linkedin.com/in/Gawrych)
+Paweł Gawrych - [LinkedIn](https://www.linkedin.com/in/Gawrych)
 
 Email - pawelgawrych203@gmail.com
 
