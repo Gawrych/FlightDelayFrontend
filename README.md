@@ -8,7 +8,7 @@ To check the likelihood of flight delay, simply visit my web application [DelayF
 
 Additionally, my website allows you to check the weather conditions for your chosen airport for the upcoming five days. This information can help you assess whether the conditions are favorable for planning a flight during that time.
 
-![Example of use on image](https://github.com/Gawrych/FlightDelayFrontend/assets/71496578/775c7982-0d6f-457f-b34d-586b957a7d4d)
+![Example of use](https://github.com/Gawrych/FlightDelayFrontend/blob/master/assets/delayFlight.png)
 
 ## Features
 
